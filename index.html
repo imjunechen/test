@@ -630,6 +630,22 @@
       font-weight: 500;
       margin-top: 24px;
     }
+    .admin-toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+    .admin-table-wrap { overflow-x:auto; }
+    .admin-table { width:100%; border-collapse:collapse; font-size:13px; min-width:700px; }
+    .admin-table th { background:var(--green); color:#fff; font-weight:600; font-size:11px; padding:8px 10px; text-align:left; position:sticky; top:0; }
+    .admin-table td { padding:7px 10px; border-bottom:1px solid var(--border); vertical-align:middle; }
+    .admin-table tr:hover td { background:var(--green-light); }
+    .admin-form { display:grid; grid-template-columns:repeat(4,1fr); gap:10px 14px; margin-top:12px; }
+    .admin-form-group { display:flex; flex-direction:column; gap:4px; }
+    .admin-form-group label { font-size:11px; font-weight:600; color:var(--text-sub); letter-spacing:0.06em; }
+    .admin-form-group input, .admin-form-group select { padding:6px 9px; border:1.5px solid var(--border); border-radius:8px; font-size:13px; font-family:inherit; background:#F0F7F3; }
+    .admin-form-group input:focus { background:#fff; border-color:var(--green); outline:none; }
+    .admin-form-collapse { display:none; padding:16px; background:var(--green-light); border-radius:12px; margin-bottom:16px; }
+    .admin-form-collapse.open { display:block; }
+    .admin-search-row { display:flex; gap:8px; margin-bottom:12px; }
+    .admin-search-input { flex:1; padding:8px 12px; border:1.5px solid var(--border); border-radius:10px; font-size:13px; font-family:inherit; outline:none; }
+    .admin-search-input:focus { border-color:var(--green); }
 
     /* ═══════════════════════════════════════════════
        UTILITIES
@@ -1257,12 +1273,46 @@
   <div class="admin-back">
     <button class="btn btn-outline" id="btn-admin-back">← 返回主介面</button>
   </div>
-  <p class="admin-placeholder">後台管理（開發中）</p>
+  <div class="admin-toolbar">
+    <input type="file" id="excel-import-input" accept=".xlsx" style="display:none" onchange="handleExcelImport(event)">
+    <button class="btn btn-outline" onclick="document.getElementById('excel-import-input').click()">匯入 Excel</button>
+    <button class="btn btn-outline" onclick="exportExcel()">匯出 Excel</button>
+    <button class="btn btn-outline" id="btn-add-product-toggle" onclick="toggleAddForm()">新增品項</button>
+  </div>
+
+  <!-- Add form (collapsed by default) -->
+  <div id="admin-add-form" class="admin-form-collapse">
+    <div class="card-title">新增品項</div>
+    <div class="admin-form" id="admin-form-fields">
+      <!-- rendered by JS -->
+    </div>
+    <div style="margin-top:14px;display:flex;gap:10px;">
+      <button class="btn btn-primary" onclick="submitNewProduct()">送出新增</button>
+      <button class="btn btn-outline" onclick="toggleAddForm()">取消</button>
+    </div>
+    <div id="admin-form-msg" style="margin-top:8px;font-size:13px;"></div>
+  </div>
+
+  <!-- Search + table -->
+  <div class="admin-search-row">
+    <input class="admin-search-input" id="admin-search" type="text" placeholder="搜尋品名、廠牌..." oninput="renderAdminTable()">
+  </div>
+  <div class="admin-table-wrap">
+    <table class="admin-table" id="admin-table">
+      <thead>
+        <tr>
+          <th>ID</th><th>廠牌</th><th>中文品名</th><th>英文品名</th><th>類型</th><th>劑型</th><th>熱量</th><th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="admin-tbody"></tbody>
+    </table>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════
      JAVASCRIPT
 ══════════════════════════════════════════════════════ -->
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script>
 'use strict';
 
@@ -1744,6 +1794,7 @@ function wireEvents() {
     document.getElementById('app').style.display = 'none';
     document.getElementById('tab-bar').style.display = 'none';
     document.getElementById('admin-view').classList.add('visible');
+    renderAdminTable();
   });
   document.getElementById('btn-admin-back').addEventListener('click', () => {
     document.getElementById('app').style.display = '';
@@ -1777,6 +1828,304 @@ document.addEventListener('DOMContentLoaded', () => {
   initTab3();
   loadProductDB();
 });
+
+/* ═══════════════════════════════════════════════
+   ADMIN BACKEND
+═══════════════════════════════════════════════ */
+const EXCEL_MAP = {
+  '廠牌':'brand','類型':'type','院內\n配方':'inHospital','特殊':'special',
+  '中文品名':'nameCh','英文品名':'nameEn','Vegetarian':'vegetarian',
+  '$':'price','罐':'canCount','Calories':'calories','ml':'ml','g':'g',
+  'Standard\nteaspoon':'teaspoon','Osmolality\n(mOsm/kg)':'osmolality',
+  'Protein\n(g)':'protein','Pro. % ':'proteinPct','Protein source':'proteinSource',
+  'Glutamine\n(mg)':'glutamine','Arginine\n(mg)':'arginine','BCAA\n(mg)':'bcaa',
+  'Leucine\n(mg)':'leucine','Fat\n(g)':'fat','Fat %':'fatPct','Fat source':'fatSource',
+  'MCT oil\n(g)':'mct','omega 3\n(g)':'omega3','CHO\n(g)':'carbs','CHO %':'carbsPct',
+  'CHO source':'carbsSource','Sugar\n(g)':'sugar','Fiber\n(g)':'fiber',
+  'Fiber source':'fiberSource','VitaminA\n(mcgRE)':'vitA','VitaminD\n(mcg)':'vitD',
+  'VitaminE\n(mg TE)':'vitE','VitaminK\n(mcg)':'vitK','VitaminC\n(mg)':'vitC',
+  'VitaminB1\n(mg)':'vitB1','VitaminB2\n(mg)':'vitB2','VitaminB6\n(mg)':'vitB6',
+  'VitaminB12\n(mcg)':'vitB12','Niacin\n(mg)':'niacin','Pantothenate\n(mg)':'pantothenate',
+  'Folate\n(mcg)':'folate','Biotin\n(mcg)':'biotin','Choline\n(mg)':'choline',
+  'Na\n(mg)':'na','Ca\n(mg)':'ca','K\n(mg)':'k','P\n(mg)':'p',
+  'Mg\n(mg)':'magnesium','Fe\n(mg)':'fe','Zn\n(mg)':'zn','I\n(mcg)':'iodine',
+};
+
+const FORM_FIELDS = [
+  {key:'brand',     label:'廠牌*',      required:true},
+  {key:'type',      label:'類型*',      required:true},
+  {key:'nameCh',    label:'中文品名*',   required:true},
+  {key:'nameEn',    label:'英文品名'},
+  {key:'inHospital',label:'院內配方'},
+  {key:'special',   label:'特殊'},
+  {key:'calories',  label:'熱量 (kcal)*',required:true, type:'number'},
+  {key:'ml',        label:'ml/罐'},
+  {key:'g',         label:'g/份'},
+  {key:'teaspoon',  label:'匙重 (g/匙)', type:'number'},
+  {key:'osmolality',label:'滲透壓',      type:'number'},
+  {key:'protein',   label:'蛋白質 (g)',  type:'number'},
+  {key:'fat',       label:'脂肪 (g)',    type:'number'},
+  {key:'carbs',     label:'醣類 (g)',    type:'number'},
+  {key:'fiber',     label:'膳食纖維 (g)',type:'number'},
+  {key:'sugar',     label:'糖 (g)',      type:'number'},
+  {key:'na',        label:'鈉 (mg)',     type:'number'},
+  {key:'ca',        label:'鈣 (mg)',     type:'number'},
+  {key:'k',         label:'鉀 (mg)',     type:'number'},
+  {key:'p',         label:'磷 (mg)',     type:'number'},
+  {key:'magnesium', label:'鎂 (mg)',     type:'number'},
+  {key:'fe',        label:'鐵 (mg)',     type:'number'},
+  {key:'zn',        label:'鋅 (mg)',     type:'number'},
+  {key:'iodine',    label:'碘 (mcg)',    type:'number'},
+  {key:'vitA',      label:'維生素A',     type:'number'},
+  {key:'vitD',      label:'維生素D',     type:'number'},
+  {key:'vitE',      label:'維生素E',     type:'number'},
+  {key:'vitK',      label:'維生素K',     type:'number'},
+  {key:'vitC',      label:'維生素C',     type:'number'},
+  {key:'vitB1',     label:'B1',          type:'number'},
+  {key:'vitB2',     label:'B2',          type:'number'},
+  {key:'vitB6',     label:'B6',          type:'number'},
+  {key:'vitB12',    label:'B12',         type:'number'},
+  {key:'niacin',    label:'菸鹼酸',      type:'number'},
+  {key:'pantothenate',label:'泛酸',      type:'number'},
+  {key:'folate',    label:'葉酸',        type:'number'},
+  {key:'biotin',    label:'生物素',      type:'number'},
+  {key:'choline',   label:'膽素',        type:'number'},
+  {key:'glutamine', label:'麩醯胺酸',    type:'number'},
+  {key:'arginine',  label:'精胺酸',      type:'number'},
+  {key:'bcaa',      label:'BCAA',        type:'number'},
+  {key:'leucine',   label:'亮胺酸',      type:'number'},
+  {key:'omega3',    label:'Omega-3',     type:'number'},
+  {key:'mct',       label:'MCT',         type:'number'},
+];
+
+function renderAddForm() {
+  const container = document.getElementById('admin-form-fields');
+  if (!container) return;
+  container.innerHTML = FORM_FIELDS.map(f => `
+    <div class="admin-form-group">
+      <label for="af-${f.key}">${f.label}</label>
+      <input id="af-${f.key}" type="${f.type||'text'}" ${f.required?'required':''} placeholder="${f.label.replace('*','')}">
+    </div>`).join('');
+}
+
+function toggleAddForm() {
+  const el = document.getElementById('admin-add-form');
+  el.classList.toggle('open');
+  if (el.classList.contains('open')) renderAddForm();
+}
+
+async function submitNewProduct() {
+  const item = {};
+  let valid = true;
+  FORM_FIELDS.forEach(f => {
+    const el = document.getElementById(`af-${f.key}`);
+    if (!el) return;
+    const v = el.value.trim();
+    if (f.required && !v) { valid = false; el.style.borderColor='var(--danger)'; return; }
+    if (!v) return;
+    item[f.key] = f.type === 'number' ? parseFloat(v) || 0 : v;
+  });
+  if (!valid) { document.getElementById('admin-form-msg').innerHTML='<span style="color:var(--danger)">請填寫必填欄位</span>'; return; }
+
+  // derive form and typeGroup
+  const t = item.type || '';
+  item.form = t.includes('液') ? '液體罐裝' : '粉劑包裝';
+  item.typeGroup = deriveTypeGroup(t);
+  if (item.calories && item.ml) item.kcalPerMl = +(item.calories/item.ml).toFixed(2);
+
+  try {
+    const res = await fetch('/api/products', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(item) });
+    const saved = await res.json();
+    window.DB.push(saved);
+    localStorage.setItem('nut_db', JSON.stringify(window.DB));
+    document.getElementById('admin-form-msg').innerHTML='<span style="color:var(--green)">✓ 新增成功</span>';
+    document.getElementById('admin-add-form').classList.remove('open');
+    renderAdminTable();
+    renderAddForm();
+  } catch(e) {
+    document.getElementById('admin-form-msg').innerHTML='<span style="color:var(--danger)">⚠ 新增失敗，請確認後端連線</span>';
+  }
+}
+
+function deriveTypeGroup(t) {
+  if (!t) return '其他';
+  if (t.includes('均衡低渣')) return '均衡低渣';
+  if (t.includes('均衡含纖')) return '均衡含纖';
+  if (t.includes('高蛋白低渣')) return '高蛋白低渣';
+  if (t.includes('高蛋白含纖')) return '高蛋白含纖';
+  if (t.includes('洗腎前')) return '洗腎前';
+  if (t.includes('洗腎後')) return '洗腎後';
+  if (t.includes('濃縮')) return '濃縮配方';
+  if (t.includes('高脂')) return '高脂';
+  if (t.includes('元素')) return '元素';
+  if (t.includes('單素')) return '單素';
+  return '其他';
+}
+
+function renderAdminTable() {
+  const kw = (document.getElementById('admin-search') ? document.getElementById('admin-search').value : '').toLowerCase();
+  const tbody = document.getElementById('admin-tbody');
+  if (!tbody) return;
+  const rows = (window.DB||[]).filter(p => {
+    if (!kw) return true;
+    return (p.nameCh||'').toLowerCase().includes(kw) || (p.brand||'').toLowerCase().includes(kw) || (p.nameEn||'').toLowerCase().includes(kw);
+  });
+  tbody.innerHTML = rows.map(p => `
+    <tr>
+      <td>${p.id}</td>
+      <td>${p.brand||''}</td>
+      <td>${p.nameCh||'—'}</td>
+      <td>${p.nameEn||''}</td>
+      <td>${p.type||''}</td>
+      <td>${p.form||''}</td>
+      <td>${p.calories||'—'}</td>
+      <td>
+        <button class="btn btn-outline" style="padding:3px 10px;font-size:11px;" onclick="openAdminDetail(${p.id})">查看</button>
+        <button class="btn btn-danger-outline" style="padding:3px 10px;font-size:11px;" onclick="deleteProduct(${p.id})">刪除</button>
+      </td>
+    </tr>`).join('');
+}
+
+async function deleteProduct(pid) {
+  if (!confirm('確定刪除此品項？')) return;
+  try {
+    await fetch(`/api/products/${pid}`, { method:'DELETE' });
+    window.DB = window.DB.filter(p=>p.id!==pid);
+    localStorage.setItem('nut_db', JSON.stringify(window.DB));
+    renderAdminTable();
+  } catch(e) {
+    alert('刪除失敗，請確認後端連線');
+  }
+}
+
+function openAdminDetail(pid) {
+  const p = (window.DB||[]).find(x=>x.id===pid);
+  if (!p) return;
+  document.getElementById('admin-detail-title').textContent = p.nameCh || '品項詳細';
+
+  const sections = [
+    { title:'基本規格', fields:[
+      {label:'滲透壓',v:p.osmolality,unit:'mOsm/kg'},{label:'濃度',v:p.kcalPerMl,unit:'kcal/ml'},
+      {label:'每份容量',v:p.ml,unit:'ml'},{label:'每份重量',v:p.g,unit:'g'},{label:'茶匙重',v:p.teaspoon,unit:'g/匙'},
+    ]},
+    { title:'巨量營養素', fields:[
+      {label:'熱量',v:p.calories,unit:'kcal'},{label:'蛋白質',v:p.protein,unit:'g'},
+      {label:'脂肪',v:p.fat,unit:'g'},{label:'碳水化合物',v:p.carbs,unit:'g'},
+      {label:'膳食纖維',v:p.fiber,unit:'g'},{label:'糖',v:p.sugar,unit:'g'},
+    ]},
+    { title:'礦物質', fields:[
+      {label:'鈉',v:p.na,unit:'mg'},{label:'鈣',v:p.ca,unit:'mg'},{label:'鉀',v:p.k,unit:'mg'},
+      {label:'磷',v:p.p,unit:'mg'},{label:'鎂',v:p.magnesium,unit:'mg'},{label:'鐵',v:p.fe,unit:'mg'},
+      {label:'鋅',v:p.zn,unit:'mg'},{label:'碘',v:p.iodine,unit:'mcg'},
+    ]},
+    { title:'維生素', fields:[
+      {label:'A',v:p.vitA,unit:'mcgRE'},{label:'D',v:p.vitD,unit:'mcg'},{label:'E',v:p.vitE,unit:'mg'},
+      {label:'K',v:p.vitK,unit:'mcg'},{label:'C',v:p.vitC,unit:'mg'},{label:'B1',v:p.vitB1,unit:'mg'},
+      {label:'B2',v:p.vitB2,unit:'mg'},{label:'B6',v:p.vitB6,unit:'mg'},{label:'B12',v:p.vitB12,unit:'mcg'},
+      {label:'菸鹼酸',v:p.niacin,unit:'mg'},{label:'泛酸',v:p.pantothenate,unit:'mg'},
+      {label:'葉酸',v:p.folate,unit:'mcg'},{label:'生物素',v:p.biotin,unit:'mcg'},{label:'膽素',v:p.choline,unit:'mg'},
+    ]},
+    { title:'其他', fields:[
+      {label:'Glutamine',v:p.glutamine,unit:'mg'},{label:'Arginine',v:p.arginine,unit:'mg'},
+      {label:'BCAA',v:p.bcaa,unit:'mg'},{label:'Leucine',v:p.leucine,unit:'mg'},
+      {label:'Omega-3',v:p.omega3,unit:'g'},{label:'MCT',v:p.mct,unit:'g'},
+    ]},
+  ];
+
+  document.getElementById('admin-detail-body').innerHTML = sections.map(sec => {
+    const fields = sec.fields.filter(f=>f.v!=null && f.v!=='');
+    if (!fields.length) return '';
+    return `<div style="margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">${sec.title}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        ${fields.map(f=>`<span style="background:var(--green-light);border:1px solid var(--green-mid);border-radius:6px;padding:3px 8px;font-size:12px;">${f.label}：${f.v} ${f.unit}</span>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('admin-detail-modal').classList.remove('hidden');
+}
+
+function closeAdminDetailModal() {
+  document.getElementById('admin-detail-modal').classList.add('hidden');
+}
+
+function handleExcelImport(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const wb = XLSX.read(data, { type:'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header:1 });
+      if (!rows.length) { alert('Excel 格式錯誤'); return; }
+      let headerRowIdx = 0;
+      for (let i = 0; i < Math.min(rows.length, 4); i++) {
+        if (rows[i].some(v => v === '中文品名' || v === 'Calories')) { headerRowIdx = i; break; }
+      }
+      const headers = rows[headerRowIdx];
+      const items = [];
+      for (let i = headerRowIdx + 1; i < rows.length; i++) {
+        const row = rows[i];
+        if (!row[4] || String(row[4]).startsWith('=')) continue;
+        const item = {};
+        headers.forEach((h, j) => {
+          const key = EXCEL_MAP[h];
+          if (!key) return;
+          const v = row[j];
+          if (v === null || v === undefined || v === '' || String(v).startsWith('=')) return;
+          const num = parseFloat(v);
+          item[key] = isNaN(num) ? String(v) : num;
+        });
+        if (!item.nameCh) continue;
+        item.form = (item.type||'').includes('液') ? '液體罐裝' : '粉劑包裝';
+        item.typeGroup = deriveTypeGroup(item.type||'');
+        if (item.calories && item.ml) item.kcalPerMl = +(item.calories/item.ml).toFixed(2);
+        items.push(item);
+      }
+      if (!items.length) { alert('未找到有效品項'); return; }
+      const mode = confirm(`匯入 ${items.length} 筆品項，選「確定」＝新增追加，選「取消」＝完全取代`) ? 'append' : 'replace';
+      fetch('/api/products/import', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ mode, items })
+      }).then(r=>r.json()).then(res => {
+        window.DB = [];
+        return fetch('/api/products').then(r=>r.json());
+      }).then(data => {
+        window.DB = data;
+        localStorage.setItem('nut_db', JSON.stringify(data));
+        alert(`✓ 匯入完成，資料庫共 ${data.length} 筆`);
+        renderAdminTable();
+        buildModalBrandFilter();
+      }).catch(()=>alert('匯入失敗，請確認後端連線'));
+    } catch(e) { alert('讀取 Excel 失敗：' + e.message); }
+  };
+  reader.readAsArrayBuffer(file);
+  event.target.value = '';
+}
+
+function exportExcel() {
+  if (!window.DB || !window.DB.length) { alert('沒有資料可匯出'); return; }
+
+  const fieldOrder = Object.keys(EXCEL_MAP);
+  const keyOrder   = fieldOrder.map(h => EXCEL_MAP[h]);
+
+  const sectionRow = fieldOrder.map(h => h);
+  const headerRow  = fieldOrder;
+  const descRow    = fieldOrder.map(() => '');
+  const dataRows   = window.DB.map(p => keyOrder.map(k => p[k] ?? ''));
+
+  const wsData = [sectionRow, headerRow, descRow, ...dataRows];
+  const ws = XLSX.utils.aoa_to_sheet(wsData);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, '營養品');
+  const today = new Date();
+  const dateStr = today.getFullYear().toString() +
+    String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0');
+  XLSX.writeFile(wb, `營養品資料庫_${dateStr}.xlsx`);
+}
 </script>
 
 <script>
@@ -2609,6 +2958,75 @@ function addProductFromModal(productId) {
 
   closeProductModal();
 }
+</script>
+
+<div id="admin-detail-modal" class="modal-overlay hidden" onclick="if(event.target===this)closeAdminDetailModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title" id="admin-detail-title">品項詳細</span>
+      <button class="modal-close" onclick="closeAdminDetailModal()">×</button>
+    </div>
+    <div id="admin-detail-body" style="padding:16px;"></div>
+  </div>
+</div>
+
+<!-- 問題回報 MODAL -->
+<div id="report-modal" class="modal-overlay hidden" onclick="if(event.target===this)closeReportModal()">
+  <div class="modal-box" style="max-width:460px;" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">問題回報 ✉</span>
+      <button class="modal-close" onclick="closeReportModal()">×</button>
+    </div>
+    <div style="padding:20px;">
+      <div style="margin-bottom:12px;">
+        <label style="font-size:11px;font-weight:600;color:var(--text-sub);letter-spacing:0.06em;display:block;margin-bottom:5px;">回報類別</label>
+        <select id="report-type" style="width:100%">
+          <option>計算錯誤</option>
+          <option>介面優化</option>
+          <option>資料缺失</option>
+          <option>其他</option>
+        </select>
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="font-size:11px;font-weight:600;color:var(--text-sub);letter-spacing:0.06em;display:block;margin-bottom:5px;">詳細說明</label>
+        <textarea id="report-desc" rows="5" style="width:100%;resize:vertical;padding:8px 10px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:13px;background:#F0F7F3;outline:none;box-sizing:border-box;" placeholder="請描述遇到的問題..."></textarea>
+      </div>
+      <div id="report-confirm" class="hidden" style="background:var(--green-light);border:1.5px solid var(--green-mid);border-radius:10px;padding:12px;font-size:13px;color:var(--green-dark);margin-bottom:12px;"></div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-primary" onclick="submitReport()">送出</button>
+        <button class="btn btn-outline" onclick="closeReportModal()">關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── 問題回報 ───────────────────────────────
+function openReportModal() {
+  document.getElementById('report-type').value = '計算錯誤';
+  document.getElementById('report-desc').value = '';
+  document.getElementById('report-confirm').classList.add('hidden');
+  document.getElementById('report-modal').classList.remove('hidden');
+}
+function closeReportModal() {
+  document.getElementById('report-modal').classList.add('hidden');
+}
+function submitReport() {
+  const type = document.getElementById('report-type').value;
+  const desc = document.getElementById('report-desc').value.trim();
+  if (!desc) { document.getElementById('report-desc').style.borderColor='var(--danger)'; return; }
+  const id = 'RPT-' + Date.now();
+  const payload = { id, type, desc, ts: new Date().toISOString() };
+  console.log('問題回報:', JSON.stringify(payload, null, 2));
+  const confirmEl = document.getElementById('report-confirm');
+  confirmEl.innerHTML = `✓ 已收到您的回報，編號：<strong>${id}</strong>`;
+  confirmEl.classList.remove('hidden');
+  document.getElementById('report-desc').value = '';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('btn-report');
+  if (btn) btn.addEventListener('click', openReportModal);
+});
 </script>
 </body>
 </html>
