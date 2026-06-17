@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>臨床營養評估與配方設計系統</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════
+       DESIGN SYSTEM
+    ═══════════════════════════════════════════════ */
+    :root {
+      --green: #008540;
+      --green-dark: #006B34;
+      --green-light: #EBF5F0;
+      --green-mid: #B8DECA;
+      --text: #2C2A29;
+      --text-sub: #6B7280;
+      --border: #C8D9D2;
+      --bg: #EEF3F0;
+      --bg-card: #FFFFFF;
+      --danger: #DC2626;
+      --warn: #D97706;
+      --shadow-card: 0 4px 14px rgba(0,133,64,0.09), 0 1px 4px rgba(0,0,0,0.06);
+      --shadow-btn-primary: 0 4px 0 #005A2B, 0 6px 10px rgba(0,90,43,0.22);
+      --shadow-btn-outline: 0 4px 0 var(--green-mid), 0 5px 8px rgba(0,133,64,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    /* ═══════════════════════════════════════════════
+       OFFLINE BANNER
+    ═══════════════════════════════════════════════ */
+    #offline-banner {
+      display: none;
+      background: #FEF3C7;
+      border-bottom: 2px solid #F59E0B;
+      color: #92400E;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 20px;
+      text-align: center;
+    }
+    #offline-banner.visible { display: block; }
+
+    /* ═══════════════════════════════════════════════
+       TOPBAR
+    ═══════════════════════════════════════════════ */
+    #topbar {
+      height: 56px;
+      background: #fff;
+      border-bottom: 2px solid var(--green-mid);
+      box-shadow: 0 2px 8px rgba(0,133,64,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      gap: 12px;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .topbar-logo {
+      height: 30px;
+      width: auto;
+      flex-shrink: 0;
+    }
+    .topbar-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--green-dark);
+      white-space: nowrap;
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════════════════ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background 0.15s, color 0.15s, box-shadow 0.1s, transform 0.1s, border-color 0.15s;
+      user-select: none;
+      text-decoration: none;
+      line-height: 1;
+    }
+    .btn:active { transform: translateY(3px); }
+
+    .btn-primary {
+      background: var(--green);
+      color: #fff;
+      border-radius: 24px;
+      padding: 10px 22px;
+      box-shadow: var(--shadow-btn-primary);
+    }
+    .btn-primary:hover { background: var(--green-dark); }
+    .btn-primary:active { box-shadow: none; }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--green);
+      border: 1.5px solid var(--green);
+      border-radius: 24px;
+      padding: 9px 20px;
+      box-shadow: var(--shadow-btn-outline);
+    }
+    .btn-outline:hover { background: var(--green); color: #fff; }
+    .btn-outline:active { box-shadow: none; }
+
+    .btn-topbar {
+      background: #fff;
+      color: var(--green);
+      border: 1.5px solid var(--green-mid);
+      border-radius: 20px;
+      padding: 7px 14px;
+      font-size: 12.5px;
+      font-weight: 600;
+      box-shadow: none;
+    }
+    .btn-topbar:hover { border-color: var(--green); }
+    .btn-topbar:active { transform: translateY(2px); }
+
+    .btn-danger-outline {
+      background: #fff;
+      color: var(--danger);
+      border: 1.5px solid var(--danger);
+      border-radius: 24px;
+      padding: 9px 20px;
+    }
+    .btn-danger-outline:hover { background: #FEF2F2; }
+
+    .toggle-group {
+      display: flex;
+      gap: 4px;
+      background: #F0F7F3;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 3px;
+    }
+    .toggle-btn {
+      flex: 1;
+      border-radius: 10px;
+      padding: 7px 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-sub);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      font-family: inherit;
+    }
+    .toggle-btn.active {
+      background: var(--green);
+      color: #fff;
+      font-weight: 600;
+    }
+    .toggle-btn:hover:not(.active) { background: var(--green-light); color: var(--green-dark); }
+
+    /* ═══════════════════════════════════════════════
+       INPUTS
+    ═══════════════════════════════════════════════ */
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+    .form-input {
+      background: #F0F7F3;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 11px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+      width: 100%;
+    }
+    .form-input:focus {
+      background: #fff;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(0,133,64,0.12);
+    }
+    .form-input::placeholder { color: #B0BFBA; }
+
+    select.form-input {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23008540' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       TABS
+    ═══════════════════════════════════════════════ */
+    #tab-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 2px solid var(--green-mid);
+      box-shadow: 0 2px 6px rgba(0,133,64,0.07);
+      display: flex;
+      padding: 0 20px;
+    }
+    .tab-btn {
+      padding: 14px 20px 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-sub);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      font-family: inherit;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      color: var(--green);
+      border-bottom-color: var(--green);
+      font-weight: 700;
+    }
+    .tab-btn:hover:not(.active) { color: var(--green-dark); }
+
+    /* ═══════════════════════════════════════════════
+       CARDS
+    ═══════════════════════════════════════════════ */
+    .card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      border: 1.5px solid var(--green-mid);
+      box-shadow: var(--shadow-card);
+      padding: 16px;
+    }
+    .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--green);
+      letter-spacing: 0.06em;
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--green-mid);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .card-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      background: var(--green);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════════════
+       MAIN LAYOUT
+    ═══════════════════════════════════════════════ */
+    #app { min-height: calc(100vh - 56px); }
+
+    .tab-view { display: none; padding: 20px; }
+    .tab-view.active { display: block; }
+
+    /* Tab 1 two-column layout */
+    .tab1-layout {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .tab1-left {
+      width: 268px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .tab1-right {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       GRID INPUTS — 基本資料
+    ═══════════════════════════════════════════════ */
+    .grid-2x2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       METRIC CARDS — 計算結果
+    ═══════════════════════════════════════════════ */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .metric-card {
+      background: var(--green-light);
+      border: 1.5px solid var(--green-mid);
+      border-radius: 12px;
+      padding: 10px 12px;
+      transition: border-color 0.2s, border-width 0.2s;
+    }
+    .metric-card.highlight-abw {
+      border: 2px solid var(--green) !important;
+    }
+    .metric-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .metric-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--green-dark);
+      line-height: 1.1;
+    }
+    .metric-value span.unit {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-sub);
+      margin-left: 2px;
+    }
+    .metric-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 20px;
+      margin-top: 4px;
+    }
+    .badge-green { background: #D1FAE5; color: #065F46; }
+    .badge-warn  { background: #FEF3C7; color: #92400E; }
+    .badge-danger { background: #FEE2E2; color: #991B1B; }
+    .metric-sub {
+      font-size: 11px;
+      color: var(--text-sub);
+      margin-top: 2px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       COLLAPSIBLE — 截肢
+    ═══════════════════════════════════════════════ */
+    .collapsible-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 14px 16px;
+      margin: -16px -16px 0;
+      border-radius: 14px 14px 0 0;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .collapsible-header:hover { background: var(--green-light); }
+    .collapsible-header.open { border-radius: 14px 14px 0 0; }
+    .collapsible-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--green);
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .collapsible-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      background: var(--green);
+      border-radius: 2px;
+    }
+    .collapsible-arrow {
+      font-size: 14px;
+      color: var(--green);
+      transition: transform 0.25s;
+      line-height: 1;
+    }
+    .collapsible-arrow.open { transform: rotate(180deg); }
+    .collapsible-body {
+      display: none;
+      padding-top: 12px;
+      margin-top: 12px;
+      border-top: 1px solid var(--green-mid);
+    }
+    .collapsible-body.open { display: block; }
+
+    /* ═══════════════════════════════════════════════
+       AMPUTATION PANEL
+    ═══════════════════════════════════════════════ */
+    .amp-panel {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .amp-svg-wrap { flex-shrink: 0; }
+    .amp-svg-wrap svg { display: block; }
+    .amp-part {
+      fill: #E8F5EE;
+      stroke: #008540;
+      stroke-width: 1.5;
+      cursor: pointer;
+      transition: fill 0.15s;
+    }
+    .amp-part:hover { fill: rgba(0,133,64,0.22); }
+    .amp-part.selected { fill: rgba(0,133,64,0.45); }
+
+    .amp-info { flex: 1; min-width: 0; }
+    .amp-info-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .amp-parts-list {
+      font-size: 12px;
+      color: var(--text);
+      line-height: 1.8;
+      min-height: 20px;
+    }
+    .amp-parts-list .no-sel { color: var(--text-sub); font-style: italic; }
+    .amp-total-row {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--text-sub);
+      border-top: 1px solid var(--green-mid);
+      padding-top: 8px;
+    }
+    .amp-total-val {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+    .amp-est-weight {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .amp-est-weight strong {
+      color: var(--green-dark);
+      font-size: 15px;
+    }
+    .amp-note {
+      font-size: 11px;
+      color: var(--text-sub);
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    /* ═══════════════════════════════════════════════
+       MATRIX TABLE
+    ═══════════════════════════════════════════════ */
+    .matrix-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 11px;
+      min-width: 560px;
+    }
+    .matrix-table th, .matrix-table td {
+      border: 1px solid var(--border);
+      text-align: center;
+      padding: 5px 2px;
+      vertical-align: middle;
+    }
+    .matrix-table th {
+      background: var(--green-light);
+      color: var(--green-dark);
+      font-weight: 700;
+      font-size: 11px;
+    }
+    .matrix-row-header {
+      background: var(--green-light) !important;
+      color: var(--green-dark) !important;
+      font-weight: 700;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .matrix-spacer {
+      background: var(--bg) !important;
+      border-left: 2px solid var(--green-mid) !important;
+      border-right: 2px solid var(--green-mid) !important;
+      width: 8px;
+      padding: 0 !important;
+    }
+    .matrix-cell {
+      cursor: pointer;
+      transition: background 0.12s;
+      font-size: 11px;
+      color: var(--text);
+    }
+    .matrix-cell:hover { background: var(--green-light); }
+    .matrix-cell.selected {
+      background: var(--green) !important;
+      color: #fff !important;
+      font-weight: 700;
+    }
+    .matrix-cell.energy-col { background: #F9FFFE; }
+    .matrix-cell.protein-col { background: #FFFDF5; }
+    .col-header-energy { color: #065F46; }
+    .col-header-protein { color: #92400E; }
+    .col-group-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 3px 2px !important;
+    }
+
+    /* ═══════════════════════════════════════════════
+       TDEE / ACTIVITY CARD
+    ═══════════════════════════════════════════════ */
+    .factor-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .tdee-chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .tdee-chip {
+      flex: 1;
+      min-width: 120px;
+      background: var(--green-light);
+      border: 1.5px solid var(--green-mid);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+    .tdee-chip-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-sub);
+      margin-bottom: 4px;
+    }
+    .tdee-chip-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--green-dark);
+      line-height: 1.1;
+    }
+    .tdee-chip-value span.unit { font-size: 12px; font-weight: 500; color: var(--text-sub); margin-left: 2px; }
+    .tdee-rmr-badge {
+      display: inline-block;
+      background: #F3F4F6;
+      color: var(--text-sub);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 7px;
+      border-radius: 20px;
+      margin-top: 4px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       PLACEHOLDER TABS
+    ═══════════════════════════════════════════════ */
+    .placeholder-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      color: var(--text-sub);
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    /* ═══════════════════════════════════════════════
+       ADMIN VIEW
+    ═══════════════════════════════════════════════ */
+    #admin-view {
+      display: none;
+      padding: 32px 20px;
+    }
+    #admin-view.visible { display: block; }
+    .admin-back {
+      margin-bottom: 20px;
+    }
+    .admin-placeholder {
+      color: var(--text-sub);
+      font-size: 15px;
+      font-weight: 500;
+      margin-top: 24px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       UTILITIES
+    ═══════════════════════════════════════════════ */
+    .hidden { display: none !important; }
+    .mt-4 { margin-top: 4px; }
+    .mt-8 { margin-top: 8px; }
+    .mt-12 { margin-top: 12px; }
+    .text-sub { color: var(--text-sub); font-size: 12px; }
+  </style>
+</head>
+<body>
+
+<!-- OFFLINE BANNER -->
+<div id="offline-banner">⚠ 目前使用本機快取資料，後端伺服器尚未連線</div>
+
+<!-- TOPBAR -->
+<header id="topbar">
+  <div class="topbar-left">
+    <img src="logo.png" alt="Logo" class="topbar-logo" onerror="this.style.display='none'">
+    <span class="topbar-title">臨床營養評估與配方設計系統</span>
+  </div>
+  <div class="topbar-right">
+    <button class="btn btn-topbar" id="btn-admin">進入管理後台</button>
+    <button class="btn btn-topbar" id="btn-report">問題回報 ✉</button>
+  </div>
+</header>
+
+<!-- MAIN APP -->
+<div id="app">
+
+  <!-- TAB BAR -->
+  <div id="tab-bar">
+    <button class="tab-btn active" data-tab="tab1">生理評估</button>
+    <button class="tab-btn" data-tab="tab2">份量分配</button>
+    <button class="tab-btn" data-tab="tab3">管灌計算</button>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 1: 生理評估
+  ══════════════════════════════════ -->
+  <div id="tab1" class="tab-view active">
+    <div class="tab1-layout">
+
+      <!-- ── LEFT COLUMN ── -->
+      <div class="tab1-left">
+
+        <!-- 基本資料 -->
+        <div class="card">
+          <div class="card-title">基本資料</div>
+          <div class="grid-2x2">
+            <div class="form-group">
+              <label class="form-label" for="input-height">身高 (cm)</label>
+              <input id="input-height" class="form-input" type="number" min="50" max="250" placeholder="170" inputmode="decimal">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="input-weight">體重 (kg)</label>
+              <input id="input-weight" class="form-input" type="number" min="1" max="500" placeholder="65" inputmode="decimal">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="input-age">年齡 (歲)</label>
+              <input id="input-age" class="form-input" type="number" min="1" max="120" placeholder="45" inputmode="numeric">
+            </div>
+            <div class="form-group">
+              <label class="form-label">性別</label>
+              <div class="toggle-group">
+                <button class="toggle-btn active" data-gender="M" id="btn-gender-m">男</button>
+                <button class="toggle-btn" data-gender="F" id="btn-gender-f">女</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 計算結果 -->
+        <div class="card">
+          <div class="card-title">計算結果</div>
+          <div class="metrics-grid">
+            <!-- BMI -->
+            <div class="metric-card" id="mc-bmi">
+              <div class="metric-label">BMI</div>
+              <div class="metric-value" id="val-bmi">—</div>
+              <div id="badge-bmi"></div>
+            </div>
+            <!-- IBW -->
+            <div class="metric-card" id="mc-ibw">
+              <div class="metric-label">IBW</div>
+              <div class="metric-value" id="val-ibw">—<span class="unit">kg</span></div>
+            </div>
+            <!-- IBW% -->
+            <div class="metric-card" id="mc-ibwpct">
+              <div class="metric-label">IBW%</div>
+              <div class="metric-value" id="val-ibwpct">—<span class="unit">%</span></div>
+              <div id="badge-ibwpct"></div>
+            </div>
+            <!-- ABW -->
+            <div class="metric-card" id="mc-abw">
+              <div class="metric-label">ABW</div>
+              <div class="metric-value" id="val-abw">—<span class="unit">kg</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 截肢體重回推 (collapsible) -->
+        <div class="card" id="card-amp">
+          <div class="collapsible-header" id="amp-toggle">
+            <span class="collapsible-title">截肢體重回推（選填）</span>
+            <span class="collapsible-arrow" id="amp-arrow">▼</span>
+          </div>
+          <div class="collapsible-body" id="amp-body">
+            <div class="amp-panel">
+              <!-- SVG body figure -->
+              <div class="amp-svg-wrap">
+                <svg id="body-svg" viewBox="0 0 90 200" width="90" height="200" xmlns="http://www.w3.org/2000/svg">
+                  <!-- 頭 -->
+                  <ellipse class="amp-part" data-id="head" cx="45" cy="18" rx="14" ry="16"/>
+                  <!-- 軀幹 -->
+                  <rect class="amp-part" data-id="trunk" x="22" y="38" width="46" height="70" rx="6"/>
+                  <!-- 左上臂 -->
+                  <rect class="amp-part" data-id="leftUpperArm" x="8" y="40" width="12" height="36" rx="5"/>
+                  <!-- 右上臂 -->
+                  <rect class="amp-part" data-id="rightUpperArm" x="70" y="40" width="12" height="36" rx="5"/>
+                  <!-- 左前臂 -->
+                  <rect class="amp-part" data-id="leftForearm" x="4" y="80" width="11" height="30" rx="5"/>
+                  <!-- 右前臂 -->
+                  <rect class="amp-part" data-id="rightForearm" x="75" y="80" width="11" height="30" rx="5"/>
+                  <!-- 左手掌 -->
+                  <ellipse class="amp-part" data-id="leftHand" cx="10" cy="118" rx="8" ry="6"/>
+                  <!-- 右手掌 -->
+                  <ellipse class="amp-part" data-id="rightHand" cx="80" cy="118" rx="8" ry="6"/>
+                  <!-- 左大腿 -->
+                  <rect class="amp-part" data-id="leftThigh" x="22" y="112" width="18" height="44" rx="5"/>
+                  <!-- 右大腿 -->
+                  <rect class="amp-part" data-id="rightThigh" x="50" y="112" width="18" height="44" rx="5"/>
+                  <!-- 左小腿 -->
+                  <rect class="amp-part" data-id="leftLeg" x="22" y="160" width="16" height="26" rx="5"/>
+                  <!-- 右小腿 -->
+                  <rect class="amp-part" data-id="rightLeg" x="52" y="160" width="16" height="26" rx="5"/>
+                  <!-- 左腳掌 -->
+                  <ellipse class="amp-part" data-id="leftFoot" cx="28" cy="190" rx="12" ry="7"/>
+                  <!-- 右腳掌 -->
+                  <ellipse class="amp-part" data-id="rightFoot" cx="62" cy="190" rx="12" ry="7"/>
+                </svg>
+              </div>
+              <!-- Info panel -->
+              <div class="amp-info">
+                <div class="amp-info-title">已選截肢部位</div>
+                <div class="amp-parts-list" id="amp-parts-list">
+                  <span class="no-sel">（尚未選擇）</span>
+                </div>
+                <div class="amp-total-row">
+                  <div>截肢比例合計</div>
+                  <div class="amp-total-val" id="amp-total-pct">0%</div>
+                </div>
+                <div class="amp-est-weight" id="amp-est-weight-wrap" style="display:none">
+                  估算完整體重<br>
+                  <strong id="amp-est-weight-val">—</strong><span class="text-sub"> kg</span>
+                </div>
+                <div class="amp-note">點擊圖示選/取消截肢部位</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /tab1-left -->
+
+      <!-- ── RIGHT COLUMN ── -->
+      <div class="tab1-right">
+
+        <!-- 需求交叉矩陣 -->
+        <div class="card">
+          <div class="card-title">需求交叉矩陣</div>
+          <div class="matrix-wrap">
+            <table class="matrix-table" id="matrix-table">
+              <thead>
+                <tr>
+                  <th rowspan="2" style="width:44px;">體重<br>基準</th>
+                  <th colspan="5" class="col-group-label col-header-energy" style="background:#F0FAF6;">熱量 (kcal/kg)</th>
+                  <th class="matrix-spacer" rowspan="2"></th>
+                  <th colspan="7" class="col-group-label col-header-protein" style="background:#FFFBF0;">蛋白質 (g/kg)</th>
+                </tr>
+                <tr>
+                  <!-- Energy headers -->
+                  <th class="col-header-energy" style="background:#F0FAF6;">20</th>
+                  <th class="col-header-energy" style="background:#F0FAF6;">25</th>
+                  <th class="col-header-energy" style="background:#F0FAF6;">30</th>
+                  <th class="col-header-energy" style="background:#F0FAF6;">35</th>
+                  <th class="col-header-energy" style="background:#F0FAF6;">40</th>
+                  <!-- Protein headers -->
+                  <th class="col-header-protein" style="background:#FFFBF0;">0.6</th>
+                  <th class="col-header-protein" style="background:#FFFBF0;">0.8</th>
+                  <th class="col-header-protein" style="background:#FFFBF0;">1.0</th>
+                  <th class="col-header-protein" style="background:#FFFBF0;">1.2</th>
+                  <th class="col-header-protein" style="background:#FFFBF0;">1.5</th>
+                  <th class="col-header-protein" style="background:#FFFBF0;">1.8</th>
+                  <th class="col-header-protein" style="background:#FFFBF0;">2.0</th>
+                </tr>
+              </thead>
+              <tbody id="matrix-tbody">
+                <!-- Rows rendered by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 活動與壓力因子 -->
+        <div class="card">
+          <div class="card-title">活動與壓力因子</div>
+          <div class="factor-grid">
+            <div class="form-group">
+              <label class="form-label" for="select-af">活動係數 (AF)</label>
+              <select id="select-af" class="form-input">
+                <option value="1.2">1.2 — 臥床</option>
+                <option value="1.3">1.3 — 輕度活動</option>
+                <option value="1.4">1.4 — 中度活動</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="select-sf">壓力係數 (SF)</label>
+              <select id="select-sf" class="form-input">
+                <option value="1.0">1.0 — 無壓力</option>
+                <option value="1.13">1.13 — 發燒</option>
+                <option value="1.2">1.2 — 手術</option>
+                <option value="1.4">1.4 — 骨折</option>
+                <option value="1.5">1.5 — 癌症</option>
+                <option value="1.7">1.7 — 敗血症</option>
+              </select>
+            </div>
+          </div>
+          <div class="tdee-chips">
+            <div class="tdee-chip">
+              <div class="tdee-chip-label">Harris-Benedict TDEE</div>
+              <div class="tdee-chip-value" id="tdee-hb-val">—<span class="unit">kcal</span></div>
+              <div class="tdee-rmr-badge" id="tdee-hb-rmr">RMR: —</div>
+            </div>
+            <div class="tdee-chip">
+              <div class="tdee-chip-label">Mifflin-St Jeor TDEE</div>
+              <div class="tdee-chip-value" id="tdee-mf-val">—<span class="unit">kcal</span></div>
+              <div class="tdee-rmr-badge" id="tdee-mf-rmr">RMR: —</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /tab1-right -->
+
+    </div><!-- /tab1-layout -->
+  </div><!-- /tab1 -->
+
+  <!-- ══════════════════════════════════
+       TAB 2: 份量分配
+  ══════════════════════════════════ -->
+  <div id="tab2" class="tab-view">
+    <div class="card placeholder-card">
+      份量分配（開發中）
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 3: 管灌計算
+  ══════════════════════════════════ -->
+  <div id="tab3" class="tab-view">
+    <div class="card placeholder-card">
+      管灌計算（開發中）
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<!-- ADMIN VIEW -->
+<div id="admin-view">
+  <div class="admin-back">
+    <button class="btn btn-outline" id="btn-admin-back">← 返回主介面</button>
+  </div>
+  <p class="admin-placeholder">後台管理（開發中）</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ═══════════════════════════════════════════════
+   AMPUTATION PARTS DATA
+═══════════════════════════════════════════════ */
+const AMP_PARTS = [
+  {id:'head',          label:'頭',    pct:0.080},
+  {id:'trunk',         label:'軀幹',  pct:0.500},
+  {id:'leftUpperArm',  label:'左上臂',pct:0.027},
+  {id:'rightUpperArm', label:'右上臂',pct:0.027},
+  {id:'leftForearm',   label:'左前臂',pct:0.016},
+  {id:'rightForearm',  label:'右前臂',pct:0.016},
+  {id:'leftHand',      label:'左手掌',pct:0.007},
+  {id:'rightHand',     label:'右手掌',pct:0.007},
+  {id:'leftThigh',     label:'左大腿',pct:0.101},
+  {id:'rightThigh',    label:'右大腿',pct:0.101},
+  {id:'leftLeg',       label:'左小腿',pct:0.044},
+  {id:'rightLeg',      label:'右小腿',pct:0.044},
+  {id:'leftFoot',      label:'左腳掌',pct:0.015},
+  {id:'rightFoot',     label:'右腳掌',pct:0.015},
+];
+
+const AMP_MAP = {};
+AMP_PARTS.forEach(p => AMP_MAP[p.id] = p);
+
+/* ═══════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════ */
+const state = {
+  height: null,
+  weight: null,
+  age: null,
+  gender: 'M',
+  ampParts: new Set(),
+  selectedEnergyKcal: null,  // { rowType, factor, value }
+  selectedProteinG: null,    // { rowType, factor, value }
+};
+
+/* ═══════════════════════════════════════════════
+   MATRIX DEFINITION
+═══════════════════════════════════════════════ */
+const ENERGY_FACTORS  = [20, 25, 30, 35, 40];
+const PROTEIN_FACTORS = [0.6, 0.8, 1.0, 1.2, 1.5, 1.8, 2.0];
+const MATRIX_ROWS     = [
+  {id:'ibw', label:'IBW'},
+  {id:'pbw', label:'PBW'},
+  {id:'abw', label:'ABW'},
+];
+
+/* ═══════════════════════════════════════════════
+   CALCULATION HELPERS
+═══════════════════════════════════════════════ */
+function getTotalAmpPct() {
+  let total = 0;
+  state.ampParts.forEach(id => {
+    if (AMP_MAP[id]) total += AMP_MAP[id].pct;
+  });
+  return total;
+}
+
+function calcIBW(height, gender) {
+  const inches = height / 2.54;
+  if (inches <= 60) {
+    return gender === 'M' ? 50 : 45.5;
+  }
+  return gender === 'M'
+    ? 50 + 2.3 * (inches - 60)
+    : 45.5 + 2.3 * (inches - 60);
+}
+
+function calcAll() {
+  const { height, weight, age, gender } = state;
+  if (!height || !weight || height <= 0 || weight <= 0) return null;
+
+  const totalAmpPct = getTotalAmpPct();
+  const effectiveWeight = totalAmpPct > 0 ? weight / (1 - totalAmpPct) : weight;
+
+  const ibw   = calcIBW(height, gender);
+  const bmi   = effectiveWeight / Math.pow(height / 100, 2);
+  const ibwPct = (effectiveWeight / ibw) * 100;
+  const abw   = ibw + 0.25 * (effectiveWeight - ibw);
+
+  return { effectiveWeight, ibw, bmi, ibwPct, abw, totalAmpPct };
+}
+
+function bmiClass(bmi) {
+  if (bmi < 18.5) return { label: '體重不足', cls: 'badge-warn' };
+  if (bmi < 25)   return { label: '正常範圍', cls: 'badge-green' };
+  if (bmi < 30)   return { label: '過重',     cls: 'badge-warn' };
+  return              { label: '肥胖',         cls: 'badge-danger' };
+}
+
+function ibwPctClass(pct) {
+  if (pct < 70)  return { label: '嚴重營養不良', cls: 'badge-danger' };
+  if (pct < 80)  return { label: '中度營養不良', cls: 'badge-warn' };
+  if (pct < 90)  return { label: '輕度營養不良', cls: 'badge-warn' };
+  return              { label: '正常',           cls: 'badge-green' };
+}
+
+function calcRMR(weight, height, age, gender, formula) {
+  if (formula === 'hb') {
+    return gender === 'M'
+      ? 88.36 + 13.4 * weight + 4.8 * height - 5.68 * age
+      : 447.6 + 9.25 * weight + 3.10 * height - 4.33 * age;
+  }
+  // Mifflin-St Jeor
+  return gender === 'M'
+    ? 10 * weight + 6.25 * height - 5 * age + 5
+    : 10 * weight + 6.25 * height - 5 * age - 161;
+}
+
+/* ═══════════════════════════════════════════════
+   MATRIX WEIGHT LOOKUP
+═══════════════════════════════════════════════ */
+function getMatrixWeights() {
+  const { height, weight, gender } = state;
+  if (!height || !weight) return null;
+
+  const totalAmpPct = getTotalAmpPct();
+  const effectiveWeight = totalAmpPct > 0 ? weight / (1 - totalAmpPct) : weight;
+
+  const ibw = calcIBW(height, gender);
+  const abw = ibw + 0.25 * (effectiveWeight - ibw);
+  const pbw = weight; // actual measured weight
+
+  return { ibw, pbw, abw };
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER — METRICS
+═══════════════════════════════════════════════ */
+function renderMetrics() {
+  const result = calcAll();
+
+  const setVal = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = text;
+  };
+
+  if (!result) {
+    setVal('val-bmi',    '—');
+    setVal('val-ibw',    '—<span class="unit">kg</span>');
+    setVal('val-ibwpct', '—<span class="unit">%</span>');
+    setVal('val-abw',    '—<span class="unit">kg</span>');
+    const bd = document.getElementById('badge-bmi');    if (bd) bd.innerHTML = '';
+    const bp = document.getElementById('badge-ibwpct');if (bp) bp.innerHTML = '';
+    document.getElementById('mc-abw').classList.remove('highlight-abw');
+    return;
+  }
+
+  const { bmi, ibw, ibwPct, abw } = result;
+
+  // BMI
+  setVal('val-bmi', bmi.toFixed(1));
+  const bmiInfo = bmiClass(bmi);
+  document.getElementById('badge-bmi').innerHTML =
+    `<span class="metric-badge ${bmiInfo.cls}">${bmiInfo.label}</span>`;
+
+  // IBW
+  setVal('val-ibw', `${ibw.toFixed(1)}<span class="unit">kg</span>`);
+
+  // IBW%
+  setVal('val-ibwpct', `${ibwPct.toFixed(1)}<span class="unit">%</span>`);
+  const ibwPctInfo = ibwPctClass(ibwPct);
+  document.getElementById('badge-ibwpct').innerHTML =
+    `<span class="metric-badge ${ibwPctInfo.cls}">${ibwPctInfo.label}</span>`;
+
+  // ABW
+  setVal('val-abw', `${abw.toFixed(1)}<span class="unit">kg</span>`);
+  const mcAbw = document.getElementById('mc-abw');
+  if (ibwPct > 120 || ibwPct < 70) {
+    mcAbw.classList.add('highlight-abw');
+  } else {
+    mcAbw.classList.remove('highlight-abw');
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER — TDEE
+═══════════════════════════════════════════════ */
+function renderTDEE() {
+  const { height, weight, age, gender } = state;
+  const af = parseFloat(document.getElementById('select-af').value);
+  const sf = parseFloat(document.getElementById('select-sf').value);
+
+  if (!height || !weight || !age || height <= 0 || weight <= 0 || age <= 0) {
+    document.getElementById('tdee-hb-val').innerHTML = '—<span class="unit">kcal</span>';
+    document.getElementById('tdee-mf-val').innerHTML = '—<span class="unit">kcal</span>';
+    document.getElementById('tdee-hb-rmr').textContent = 'RMR: —';
+    document.getElementById('tdee-mf-rmr').textContent = 'RMR: —';
+    return;
+  }
+
+  const totalAmpPct = getTotalAmpPct();
+  const effectiveWeight = totalAmpPct > 0 ? weight / (1 - totalAmpPct) : weight;
+
+  ['hb', 'mf'].forEach(formula => {
+    const rmrBase = calcRMR(effectiveWeight, height, age, gender, formula);
+    const rmrAdj  = totalAmpPct > 0 ? rmrBase * (1 - totalAmpPct) : rmrBase;
+    const tdee    = Math.round(rmrAdj * af * sf);
+    const rmrRnd  = Math.round(rmrAdj);
+
+    document.getElementById(`tdee-${formula}-val`).innerHTML =
+      `${tdee.toLocaleString()}<span class="unit">kcal</span>`;
+    document.getElementById(`tdee-${formula}-rmr`).textContent = `RMR: ${rmrRnd.toLocaleString()} kcal`;
+  });
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER — MATRIX
+═══════════════════════════════════════════════ */
+function renderMatrix() {
+  const tbody = document.getElementById('matrix-tbody');
+  if (!tbody) return;
+
+  const weights = getMatrixWeights();
+
+  MATRIX_ROWS.forEach(row => {
+    const tr = tbody.querySelector(`tr[data-row="${row.id}"]`) || createMatrixRow(row.id);
+    const w = weights ? weights[row.id] : null;
+
+    // Row header
+    const th = tr.querySelector('th');
+    if (th) {
+      th.textContent = row.label;
+      if (w !== null && w !== undefined) {
+        th.innerHTML = `${row.label}<br><span style="font-weight:400;font-size:10px;color:var(--text-sub)">${w.toFixed(1)}kg</span>`;
+      }
+    }
+
+    // Energy cells
+    ENERGY_FACTORS.forEach((factor, idx) => {
+      const td = tr.querySelector(`td[data-type="energy"][data-factor="${factor}"]`);
+      if (!td) return;
+      if (w !== null && w !== undefined) {
+        td.textContent = Math.round(w * factor);
+        td.style.opacity = '1';
+      } else {
+        td.textContent = '—';
+        td.style.opacity = '0.4';
+      }
+      // Restore selected highlight
+      const sel = state.selectedEnergyKcal;
+      if (sel && sel.rowId === row.id && sel.factor === factor) {
+        td.classList.add('selected');
+      } else {
+        td.classList.remove('selected');
+      }
+    });
+
+    // Protein cells
+    PROTEIN_FACTORS.forEach((factor, idx) => {
+      const td = tr.querySelector(`td[data-type="protein"][data-factor="${factor}"]`);
+      if (!td) return;
+      if (w !== null && w !== undefined) {
+        td.textContent = Math.round(w * factor * 10) / 10;
+        td.style.opacity = '1';
+      } else {
+        td.textContent = '—';
+        td.style.opacity = '0.4';
+      }
+      // Restore selected highlight
+      const sel = state.selectedProteinG;
+      if (sel && sel.rowId === row.id && sel.factor === factor) {
+        td.classList.add('selected');
+      } else {
+        td.classList.remove('selected');
+      }
+    });
+  });
+}
+
+function createMatrixRow(rowId) {
+  const tbody = document.getElementById('matrix-tbody');
+  const tr = document.createElement('tr');
+  tr.dataset.row = rowId;
+
+  // Row header
+  const th = document.createElement('th');
+  th.className = 'matrix-row-header';
+  tr.appendChild(th);
+
+  // Energy cells
+  ENERGY_FACTORS.forEach(factor => {
+    const td = document.createElement('td');
+    td.className = 'matrix-cell energy-col';
+    td.dataset.type = 'energy';
+    td.dataset.factor = factor;
+    td.dataset.row = rowId;
+    td.textContent = '—';
+    td.style.opacity = '0.4';
+    td.addEventListener('click', () => onMatrixCellClick(td, 'energy', rowId, factor));
+    tr.appendChild(td);
+  });
+
+  // Spacer
+  const spacer = document.createElement('td');
+  spacer.className = 'matrix-spacer';
+  tr.appendChild(spacer);
+
+  // Protein cells
+  PROTEIN_FACTORS.forEach(factor => {
+    const td = document.createElement('td');
+    td.className = 'matrix-cell protein-col';
+    td.dataset.type = 'protein';
+    td.dataset.factor = factor;
+    td.dataset.row = rowId;
+    td.textContent = '—';
+    td.style.opacity = '0.4';
+    td.addEventListener('click', () => onMatrixCellClick(td, 'protein', rowId, factor));
+    tr.appendChild(td);
+  });
+
+  tbody.appendChild(tr);
+  return tr;
+}
+
+function onMatrixCellClick(td, type, rowId, factor) {
+  if (type === 'energy') {
+    const isSame = state.selectedEnergyKcal &&
+      state.selectedEnergyKcal.rowId === rowId &&
+      state.selectedEnergyKcal.factor === factor;
+
+    // Deselect all energy cells
+    document.querySelectorAll('#matrix-tbody td[data-type="energy"]')
+      .forEach(el => el.classList.remove('selected'));
+
+    if (isSame) {
+      state.selectedEnergyKcal = null;
+    } else {
+      state.selectedEnergyKcal = { rowId, factor, value: td.textContent };
+      td.classList.add('selected');
+    }
+  } else {
+    const isSame = state.selectedProteinG &&
+      state.selectedProteinG.rowId === rowId &&
+      state.selectedProteinG.factor === factor;
+
+    document.querySelectorAll('#matrix-tbody td[data-type="protein"]')
+      .forEach(el => el.classList.remove('selected'));
+
+    if (isSame) {
+      state.selectedProteinG = null;
+    } else {
+      state.selectedProteinG = { rowId, factor, value: td.textContent };
+      td.classList.add('selected');
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   RENDER — AMPUTATION INFO PANEL
+═══════════════════════════════════════════════ */
+function renderAmpPanel() {
+  const totalPct = getTotalAmpPct();
+  const pctDisplay = (totalPct * 100).toFixed(1) + '%';
+  document.getElementById('amp-total-pct').textContent = pctDisplay;
+
+  const listEl = document.getElementById('amp-parts-list');
+  if (state.ampParts.size === 0) {
+    listEl.innerHTML = '<span class="no-sel">（尚未選擇）</span>';
+  } else {
+    const parts = [...state.ampParts].map(id => {
+      const p = AMP_MAP[id];
+      return `${p.label} (${(p.pct * 100).toFixed(1)}%)`;
+    });
+    listEl.innerHTML = parts.join('<br>');
+  }
+
+  const estWrap = document.getElementById('amp-est-weight-wrap');
+  if (state.ampParts.size > 0 && state.weight && totalPct < 1) {
+    const est = state.weight / (1 - totalPct);
+    document.getElementById('amp-est-weight-val').textContent = est.toFixed(1);
+    estWrap.style.display = 'block';
+  } else {
+    estWrap.style.display = 'none';
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   MASTER RECALCULATE
+═══════════════════════════════════════════════ */
+function recalculate() {
+  renderMetrics();
+  renderMatrix();
+  renderTDEE();
+  renderAmpPanel();
+}
+
+/* ═══════════════════════════════════════════════
+   INIT MATRIX ROWS (create DOM upfront)
+═══════════════════════════════════════════════ */
+function initMatrix() {
+  MATRIX_ROWS.forEach(row => createMatrixRow(row.id));
+}
+
+/* ═══════════════════════════════════════════════
+   EVENT WIRING
+═══════════════════════════════════════════════ */
+function wireEvents() {
+
+  // Basic inputs
+  const inputHeight = document.getElementById('input-height');
+  const inputWeight = document.getElementById('input-weight');
+  const inputAge    = document.getElementById('input-age');
+
+  inputHeight.addEventListener('input', () => {
+    const v = parseFloat(inputHeight.value);
+    state.height = isNaN(v) ? null : v;
+    recalculate();
+  });
+  inputWeight.addEventListener('input', () => {
+    const v = parseFloat(inputWeight.value);
+    state.weight = isNaN(v) ? null : v;
+    recalculate();
+  });
+  inputAge.addEventListener('input', () => {
+    const v = parseInt(inputAge.value, 10);
+    state.age = isNaN(v) ? null : v;
+    recalculate();
+  });
+
+  // Gender toggle
+  document.getElementById('btn-gender-m').addEventListener('click', () => {
+    state.gender = 'M';
+    document.getElementById('btn-gender-m').classList.add('active');
+    document.getElementById('btn-gender-f').classList.remove('active');
+    recalculate();
+  });
+  document.getElementById('btn-gender-f').addEventListener('click', () => {
+    state.gender = 'F';
+    document.getElementById('btn-gender-f').classList.add('active');
+    document.getElementById('btn-gender-m').classList.remove('active');
+    recalculate();
+  });
+
+  // AF / SF selects
+  document.getElementById('select-af').addEventListener('change', recalculate);
+  document.getElementById('select-sf').addEventListener('change', recalculate);
+
+  // Amputation collapsible
+  document.getElementById('amp-toggle').addEventListener('click', () => {
+    const body  = document.getElementById('amp-body');
+    const arrow = document.getElementById('amp-arrow');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    arrow.classList.toggle('open', !isOpen);
+  });
+
+  // Amputation SVG parts
+  document.querySelectorAll('.amp-part').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.id;
+      if (state.ampParts.has(id)) {
+        state.ampParts.delete(id);
+        el.classList.remove('selected');
+      } else {
+        state.ampParts.add(id);
+        el.classList.add('selected');
+      }
+      recalculate();
+    });
+  });
+
+  // Tab switching
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-view').forEach(v => v.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(target).classList.add('active');
+    });
+  });
+
+  // Admin toggle
+  document.getElementById('btn-admin').addEventListener('click', () => {
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('tab-bar').style.display = 'none';
+    document.getElementById('admin-view').classList.add('visible');
+  });
+  document.getElementById('btn-admin-back').addEventListener('click', () => {
+    document.getElementById('app').style.display = '';
+    document.getElementById('tab-bar').style.display = '';
+    document.getElementById('admin-view').classList.remove('visible');
+  });
+}
+
+/* ═══════════════════════════════════════════════
+   OFFLINE CHECK
+═══════════════════════════════════════════════ */
+function checkOnlineStatus() {
+  fetch('/api/ping', { method: 'GET', cache: 'no-store' })
+    .then(res => {
+      if (!res.ok) throw new Error('not ok');
+    })
+    .catch(() => {
+      document.getElementById('offline-banner').classList.add('visible');
+    });
+}
+
+/* ═══════════════════════════════════════════════
+   BOOT
+═══════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  initMatrix();
+  wireEvents();
+  recalculate();
+  checkOnlineStatus();
+});
+</script>
+</body>
+</html>
