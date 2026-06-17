@@ -639,6 +639,114 @@
     .mt-8 { margin-top: 8px; }
     .mt-12 { margin-top: 12px; }
     .text-sub { color: var(--text-sub); font-size: 12px; }
+
+    /* ═══════════════════════════════════════════════
+       TAB 2 / TAB 3 STYLES
+    ═══════════════════════════════════════════════ */
+    .tab2-body { display:flex; align-items:flex-start; gap:24px; padding:0; }
+    .tab2-left { flex-shrink:0; min-width:160px; max-width:200px; position:sticky; top:108px; align-self:flex-start; }
+    .tab2-right { flex:1; min-width:0; }
+
+    .target-card { margin-bottom:16px; }
+    .target-row { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+    .target-group { display:flex; align-items:center; gap:6px; white-space:nowrap; }
+    .target-divider { width:1px; height:36px; background:var(--border); align-self:center; flex-shrink:0; }
+    .target-input-sm { width:70px; padding:6px 8px; font-size:14px; background:#F0F7F3; border:1.5px solid var(--border); border-radius:8px; font-family:inherit; color:var(--text); outline:none; text-align:center; }
+    .target-input-sm:focus { background:#fff; border-color:var(--green); box-shadow:0 0 0 3px rgba(0,133,64,0.12); }
+    .btn-step { padding:4px 10px; font-size:12px; border-radius:8px; background:#fff; color:var(--green); border:1.5px solid var(--green); cursor:pointer; font-family:inherit; font-weight:600; transition:background 0.1s; line-height:1.4; }
+    .btn-step:hover { background:var(--green); color:#fff; }
+    .macro-preview { font-size:12px; color:var(--text-sub); margin-top:8px; }
+
+    .totals-card-label { font-size:11px; color:var(--text-sub); }
+    .totals-card-value { font-size:18px; font-weight:700; color:var(--green-dark); }
+    .totals-card-diff-pos { font-size:12px; color:var(--warn); }
+    .totals-card-diff-neg { font-size:12px; color:var(--danger); }
+    .totals-row { margin-bottom:10px; }
+
+    .ckd-toggle-row { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+    .ckd-label { font-size:13px; font-weight:600; color:var(--text); cursor:pointer; }
+    .ckd-switch { position:relative; display:inline-block; width:38px; height:22px; }
+    .ckd-switch input { opacity:0; width:0; height:0; }
+    .ckd-slider { position:absolute; cursor:pointer; top:0;left:0;right:0;bottom:0; background:#ccc; border-radius:22px; transition:0.3s; }
+    .ckd-slider:before { position:absolute; content:""; height:16px; width:16px; left:3px; bottom:3px; background:#fff; border-radius:50%; transition:0.3s; }
+    input:checked + .ckd-slider { background:var(--green); }
+    input:checked + .ckd-slider:before { transform:translateX(16px); }
+
+    .supplement-card { background:var(--green-light); border:1.5px solid var(--green-mid); border-radius:12px; padding:10px 12px; margin-bottom:8px; display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+    .supplement-name { font-weight:600; font-size:13px; flex:1; min-width:120px; }
+    .supplement-info { font-size:11px; color:var(--text-sub); width:100%; }
+    .supplement-qty-row { display:flex; align-items:center; gap:6px; font-size:12px; }
+    .supplement-total { font-size:11px; color:var(--text-sub); }
+    .warn-banner { background:#FEF3C7; border:1.5px solid #F59E0B; border-radius:8px; padding:8px 12px; font-size:12px; color:#92400E; margin-bottom:8px; }
+
+    .dist-table-wrap { overflow-x:auto; margin-top:12px; }
+    .dist-table { width:100%; border-collapse:collapse; font-size:12px; min-width:500px; }
+    .dist-table th, .dist-table td { border:1px solid var(--border); text-align:center; padding:4px 3px; vertical-align:middle; }
+    .dist-table th { background:var(--green-light); color:var(--green-dark); font-weight:700; font-size:11px; }
+    .dist-table .row-disabled { background:#F3F4F6 !important; opacity:0.5; }
+    .dist-table .row-disabled input { pointer-events:none; }
+    .dist-table .col-total { background:#F9FFFE; font-weight:700; color:var(--green-dark); }
+    .dist-row-name { font-weight:600; font-size:11px; white-space:nowrap; padding:0 6px !important; text-align:left !important; }
+    .dist-row-x { background:none; border:none; color:var(--danger); font-size:14px; cursor:pointer; padding:2px 6px; font-weight:700; }
+    .dist-input { width:44px; padding:3px 2px; text-align:center; border:1px solid var(--border); border-radius:4px; font-family:inherit; font-size:12px; background:#fff; }
+
+    /* Tab 3 */
+    .t3-section { margin-bottom:16px; }
+    .param-row { display:flex; flex-wrap:wrap; gap:16px; align-items:center; }
+    .param-group { display:flex; align-items:center; gap:6px; font-size:13px; }
+    .param-input { width:60px; padding:6px 8px; font-size:13px; background:#F0F7F3; border:1.5px solid var(--border); border-radius:8px; font-family:inherit; text-align:center; outline:none; }
+    .param-input:focus { background:#fff; border-color:var(--green); box-shadow:0 0 0 3px rgba(0,133,64,0.12); }
+
+    .formula-card { margin-bottom:16px; }
+    .formula-item { background:var(--green-light); border:1.5px solid var(--green-mid); border-radius:12px; padding:12px 14px; margin-bottom:8px; }
+    .formula-item-header { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+    .formula-item-name { font-weight:700; font-size:14px; color:var(--green-dark); }
+    .formula-item-name-en { font-size:11px; color:var(--text-sub); }
+    .formula-item-serving { font-size:11px; color:var(--text-sub); margin-top:2px; }
+    .formula-item-row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:8px; font-size:12px; }
+    .formula-item-result { margin-top:6px; font-size:12px; color:var(--text); background:#fff; border-radius:8px; padding:6px 10px; border:1px solid var(--border); }
+    .formula-totals { margin-top:12px; padding-top:10px; border-top:1px solid var(--green-mid); }
+    .formula-totals-main { font-size:13px; font-weight:600; color:var(--green-dark); margin-bottom:4px; }
+    .formula-totals-sub { font-size:11px; color:var(--text-sub); margin-bottom:4px; }
+    .formula-salt-warn { font-size:12px; color:var(--warn); font-weight:600; }
+    .formula-salt-ok { font-size:12px; color:var(--green); font-weight:600; }
+    .formula-concentration { font-size:12px; color:var(--text-sub); margin-top:4px; }
+
+    /* Modal */
+    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:1000; display:flex; align-items:center; justify-content:center; }
+    .modal-overlay.hidden { display:none; }
+    .modal-box { background:#fff; border-radius:16px; width:100%; max-width:680px; max-height:85vh; overflow-y:auto; box-shadow:0 8px 40px rgba(0,0,0,0.22); display:flex; flex-direction:column; }
+    .modal-header { padding:18px 20px 12px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; background:#fff; z-index:10; }
+    .modal-title { font-size:16px; font-weight:700; color:var(--green-dark); }
+    .modal-close { background:none; border:none; font-size:22px; color:var(--text-sub); cursor:pointer; line-height:1; padding:0 4px; }
+    .modal-close:hover { color:var(--danger); }
+    .modal-filters { padding:12px 20px; display:flex; flex-wrap:wrap; gap:8px; border-bottom:1px solid var(--border); }
+    .modal-filter-input { flex:1; min-width:180px; padding:7px 11px; border:1.5px solid var(--border); border-radius:10px; font-family:inherit; font-size:13px; outline:none; }
+    .modal-filter-input:focus { border-color:var(--green); }
+    .modal-filter-select { padding:7px 24px 7px 10px; border:1.5px solid var(--border); border-radius:10px; font-family:inherit; font-size:13px; appearance:none; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23008540' d='M6 8L1 3h10z'/%3E%3C/svg%3E") no-repeat right 8px center; outline:none; cursor:pointer; }
+    .modal-filter-select:focus { border-color:var(--green); }
+    .modal-results { flex:1; overflow-y:auto; padding:8px 0; }
+    .modal-product-row { padding:10px 20px; cursor:pointer; border-bottom:1px solid #F0F7F3; display:flex; align-items:center; gap:12px; transition:background 0.1s; }
+    .modal-product-row:hover { background:var(--green-light); }
+    .modal-product-left { flex:1; min-width:0; }
+    .modal-product-nameCh { font-weight:700; font-size:14px; color:var(--text); }
+    .modal-product-nameEn { font-size:11px; color:var(--text-sub); }
+    .modal-product-meta { font-size:11px; color:var(--text-sub); }
+    .modal-product-kcal { font-size:12px; color:var(--green-dark); font-weight:600; }
+    .modal-product-detail { background:var(--green-light); padding:10px 20px; font-size:11px; color:var(--text); display:none; flex-wrap:wrap; gap:6px; }
+    .modal-product-detail.open { display:flex; }
+    .modal-product-detail span { background:#fff; border:1px solid var(--border); border-radius:6px; padding:2px 7px; white-space:nowrap; }
+    .modal-empty { padding:40px 20px; text-align:center; color:var(--text-sub); font-size:14px; }
+
+    /* Print */
+    .print-only { display:none; }
+    @media print {
+      body * { visibility:hidden; }
+      #print-content, #print-content * { visibility:visible; }
+      #print-content { position:absolute; left:0; top:0; width:100%; font-family:'Noto Sans TC',sans-serif; font-size:13px; color:#000; }
+      .print-only { display:block; }
+      .no-print { display:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -881,8 +989,111 @@
        TAB 2: 份量分配
   ══════════════════════════════════ -->
   <div id="tab2" class="tab-view">
-    <div class="card placeholder-card">
-      份量分配（開發中）
+    <!-- 目標定案區 (shared, Tab 2 instance) -->
+    <div class="card target-card" id="t2-target-card">
+      <div class="card-title">目標定案區</div>
+      <div class="target-row">
+        <div class="target-group">
+          <label style="font-size:13px;font-weight:600;">目標熱量</label>
+          <input id="t2-kcal-input" class="target-input-sm" type="number" step="50" min="0" placeholder="0">
+          <span style="font-size:13px;">kcal</span>
+          <button class="btn-step" onclick="stepTarget('kcal',-50)">−50</button>
+          <button class="btn-step" onclick="stepTarget('kcal',50)">+50</button>
+        </div>
+        <div class="target-divider"></div>
+        <div class="target-group">
+          <label style="font-size:13px;font-weight:600;">目標蛋白質</label>
+          <input id="t2-protein-input" class="target-input-sm" type="number" step="1" min="0" placeholder="0">
+          <span style="font-size:13px;">g</span>
+          <button class="btn-step" onclick="stepTarget('protein',-1)">−1</button>
+          <button class="btn-step" onclick="stepTarget('protein',1)">+1</button>
+        </div>
+        <div class="target-divider"></div>
+        <div class="target-group">
+          <label style="font-size:13px;font-weight:600;">脂質比例</label>
+          <input id="t2-fat-pct-input" class="target-input-sm" type="number" step="1" min="0" max="100" value="30">
+          <span style="font-size:13px;">%</span>
+          <span style="font-size:12px;color:var(--text-sub);">→ 醣類 <span id="t2-carb-pct">—</span>%（自動）</span>
+        </div>
+      </div>
+      <div class="macro-preview" id="t2-macro-preview">—</div>
+    </div>
+
+    <div class="tab2-body">
+      <!-- Left sticky: 實際營養素總計 -->
+      <div class="tab2-left">
+        <div class="card" style="padding:14px;">
+          <div class="card-title" style="margin-bottom:10px;">實際營養素總計</div>
+          <div class="totals-row">
+            <div class="totals-card-label">熱量</div>
+            <div class="totals-card-value" id="t2-total-kcal">0 kcal</div>
+            <div id="t2-diff-kcal"></div>
+          </div>
+          <div class="totals-row">
+            <div class="totals-card-label">蛋白質</div>
+            <div class="totals-card-value" id="t2-total-protein">0 g</div>
+            <div class="totals-card-label" id="t2-total-protein-pct"></div>
+          </div>
+          <div class="totals-row">
+            <div class="totals-card-label">碳水化合物</div>
+            <div class="totals-card-value" id="t2-total-carbs">0 g</div>
+            <div class="totals-card-label" id="t2-total-carbs-pct"></div>
+          </div>
+          <div class="totals-row">
+            <div class="totals-card-label">脂質</div>
+            <div class="totals-card-value" id="t2-total-fat">0 g</div>
+            <div class="totals-card-label" id="t2-total-fat-pct"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div class="tab2-right">
+        <!-- CKD toggle -->
+        <div class="card" style="margin-bottom:12px;padding:12px 16px;">
+          <div class="ckd-toggle-row">
+            <label class="ckd-switch">
+              <input type="checkbox" id="ckd-toggle" onchange="onCKDToggle()">
+              <span class="ckd-slider"></span>
+            </label>
+            <span class="ckd-label">CKD 模式</span>
+            <span style="font-size:11px;color:var(--text-sub);">（開啟後隱藏乳品、顯示低氮澱粉）</span>
+          </div>
+        </div>
+
+        <!-- 加入營養品 -->
+        <div class="card" style="margin-bottom:12px;">
+          <div class="card-title">加入營養品</div>
+          <button class="btn btn-outline" style="margin-bottom:10px;" onclick="openProductModal('tab2-supplement')">＋ 加入營養品</button>
+          <div id="t2-supplements-list"></div>
+          <div id="t2-supp-warn" class="warn-banner hidden">⚠ 補充品已超過目標，請調整份量</div>
+        </div>
+
+        <!-- 計算按鈕 + 表格 -->
+        <div class="card">
+          <div class="card-title">份量分配表格</div>
+          <button class="btn btn-outline" style="width:100%;margin-bottom:12px;" onclick="runDistribution()">計算分配</button>
+          <div id="t2-dist-warn" class="warn-banner hidden"></div>
+          <div class="dist-table-wrap">
+            <table class="dist-table" id="dist-table">
+              <thead>
+                <tr>
+                  <th style="width:20px;"></th>
+                  <th style="text-align:left;padding-left:6px;">食物類別</th>
+                  <th>早餐</th>
+                  <th>早點</th>
+                  <th>午餐</th>
+                  <th>午點</th>
+                  <th>晚餐</th>
+                  <th>晚點</th>
+                  <th class="col-total">合計</th>
+                </tr>
+              </thead>
+              <tbody id="dist-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -890,12 +1101,156 @@
        TAB 3: 管灌計算
   ══════════════════════════════════ -->
   <div id="tab3" class="tab-view">
-    <div class="card placeholder-card">
-      管灌計算（開發中）
+    <!-- 目標定案區 (Tab 3 instance) -->
+    <div class="card target-card t3-section" id="t3-target-card">
+      <div class="card-title">目標定案區</div>
+      <div class="target-row">
+        <div class="target-group">
+          <label style="font-size:13px;font-weight:600;">目標熱量</label>
+          <input id="t3-kcal-input" class="target-input-sm" type="number" step="50" min="0" placeholder="0">
+          <span style="font-size:13px;">kcal</span>
+          <button class="btn-step" onclick="stepTargetT3('kcal',-50)">−50</button>
+          <button class="btn-step" onclick="stepTargetT3('kcal',50)">+50</button>
+        </div>
+        <div class="target-divider"></div>
+        <div class="target-group">
+          <label style="font-size:13px;font-weight:600;">目標蛋白質</label>
+          <input id="t3-protein-input" class="target-input-sm" type="number" step="1" min="0" placeholder="0">
+          <span style="font-size:13px;">g</span>
+          <button class="btn-step" onclick="stepTargetT3('protein',-1)">−1</button>
+          <button class="btn-step" onclick="stepTargetT3('protein',1)">+1</button>
+        </div>
+        <div class="target-divider"></div>
+        <div class="target-group">
+          <label style="font-size:13px;font-weight:600;">脂質比例</label>
+          <input id="t3-fat-pct-input" class="target-input-sm" type="number" step="1" min="0" max="100" value="30">
+          <span style="font-size:13px;">%</span>
+          <span style="font-size:12px;color:var(--text-sub);">→ 醣類 <span id="t3-carb-pct">—</span>%（自動）</span>
+        </div>
+      </div>
+      <div class="macro-preview" id="t3-macro-preview">—</div>
+    </div>
+
+    <!-- 灌食參數區 -->
+    <div class="card t3-section">
+      <div class="card-title">灌食參數區</div>
+      <div class="param-row">
+        <div class="param-group">
+          <label style="font-weight:600;">每日灌食餐次</label>
+          <input id="t3-meals" class="param-input" type="number" min="1" value="6" oninput="onTubeFeedParamChange()">
+          <span>餐</span>
+        </div>
+        <div class="param-group">
+          <label style="font-weight:600;">每餐間隔時間</label>
+          <input id="t3-interval" class="param-input" type="number" min="1" value="4" oninput="onTubeFeedParamChange()">
+          <span>小時</span>
+        </div>
+        <div class="param-group">
+          <label style="font-weight:600;">目標濃度</label>
+          <input id="t3-concentration" class="param-input" type="number" step="0.1" min="0.1" value="1.0" oninput="onTubeFeedParamChange()">
+          <span>kcal/ml</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 配方一 -->
+    <div class="card formula-card t3-section" id="formula1-card">
+      <div class="card-title">灌食配方一</div>
+      <button class="btn btn-outline" style="margin-bottom:12px;" onclick="openProductModal('formula1')">＋ 加入品項</button>
+      <div id="formula1-items"></div>
+      <div class="formula-totals" id="formula1-totals"></div>
+    </div>
+
+    <!-- 配方二 -->
+    <div class="card formula-card t3-section" id="formula2-card">
+      <div class="card-title">灌食配方二</div>
+      <button class="btn btn-outline" style="margin-bottom:12px;" onclick="openProductModal('formula2')">＋ 加入品項</button>
+      <div id="formula2-items"></div>
+      <div class="formula-totals" id="formula2-totals"></div>
+    </div>
+
+    <!-- 列印 -->
+    <div class="t3-section">
+      <button class="btn btn-outline" style="width:100%;" onclick="buildPrintContent();window.print()">產出衛教單並列印</button>
     </div>
   </div>
 
 </div><!-- /app -->
+
+<!-- PRODUCT MODAL -->
+<div id="product-modal" class="modal-overlay hidden" onclick="onModalOverlayClick(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">選擇營養品</span>
+      <button class="modal-close" onclick="closeProductModal()">×</button>
+    </div>
+    <div class="modal-filters">
+      <input id="modal-keyword" class="modal-filter-input" type="text" placeholder="搜尋品名..." oninput="renderModalResults()">
+      <select id="modal-brand" class="modal-filter-select" onchange="renderModalResults()">
+        <option value="">所有廠牌</option>
+      </select>
+      <select id="modal-form" class="modal-filter-select" onchange="renderModalResults()">
+        <option value="">所有劑型</option>
+        <option value="液體罐裝">液體罐裝</option>
+        <option value="粉劑包裝">粉劑包裝</option>
+      </select>
+      <select id="modal-type" class="modal-filter-select" onchange="renderModalResults()">
+        <option value="">所有類型</option>
+        <option value="均衡低渣">均衡低渣</option>
+        <option value="均衡含纖">均衡含纖</option>
+        <option value="高蛋白低渣">高蛋白低渣</option>
+        <option value="高蛋白含纖">高蛋白含纖</option>
+        <option value="洗腎前">洗腎前</option>
+        <option value="洗腎後">洗腎後</option>
+        <option value="濃縮配方">濃縮配方</option>
+        <option value="高脂">高脂</option>
+        <option value="元素">元素</option>
+        <option value="單素">單素</option>
+        <option value="其他">其他</option>
+      </select>
+    </div>
+    <div class="modal-results" id="modal-results"></div>
+  </div>
+</div>
+
+<!-- PRINT CONTENT -->
+<div id="print-content" class="print-only">
+  <div style="text-align:center;font-size:18px;font-weight:700;margin-bottom:16px;">管灌飲食配方設計單</div>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:12px;font-size:13px;">
+    <tr>
+      <td style="padding:4px 8px;">姓名_______________</td>
+      <td style="padding:4px 8px;">病歷號_______________</td>
+    </tr>
+    <tr>
+      <td style="padding:4px 8px;">性別_______</td>
+      <td style="padding:4px 8px;">身高_______</td>
+      <td style="padding:4px 8px;">體重_______</td>
+      <td style="padding:4px 8px;">理想體重_______</td>
+    </tr>
+    <tr>
+      <td colspan="4" style="padding:4px 8px;">每日營養需要量：熱量_______ 大卡，蛋白質_______ 公克</td>
+    </tr>
+    <tr>
+      <td colspan="4" style="padding:4px 8px;">管餵時間：每 _______ 小時管餵一次，每日 _______ 次</td>
+    </tr>
+    <tr>
+      <td colspan="2"></td>
+      <td style="padding:4px 8px;text-align:right;">營養師：_______</td>
+      <td style="padding:4px 8px;text-align:right;">日　期：_______</td>
+    </tr>
+  </table>
+  <div id="print-formula1"></div>
+  <div id="print-formula2"></div>
+  <div style="margin-top:16px;font-size:12px;border-top:1px solid #ccc;padding-top:10px;">
+    <div>用具：量杯、茶匙、內附匙</div>
+    <div>作法：1.量出所需要的量</div>
+    <div style="padding-left:36px;">2.將所有材料沖泡混合均勻</div>
+    <div>備註：每次食用前再沖泡即可</div>
+    <div style="margin-top:6px;">營養品販售地點：北棟2樓G226</div>
+    <div>服務時間：週一～週五 上午09:00～12:00 / 下午02:00～04:30</div>
+    <div style="margin-top:8px;"><img src="qrcode.png" style="width:80px;height:80px;" onerror="this.style.display='none'" alt="QR"></div>
+  </div>
+</div>
 
 <!-- ADMIN VIEW -->
 <div id="admin-view">
@@ -1418,7 +1773,842 @@ document.addEventListener('DOMContentLoaded', () => {
   wireEvents();
   recalculate();
   checkOnlineStatus();
+  initTab2();
+  initTab3();
+  loadProductDB();
 });
+</script>
+
+<script>
+'use strict';
+/* ═══════════════════════════════════════════════
+   SHARED STATE (Tab 2 + Tab 3)
+═══════════════════════════════════════════════ */
+let targetKcal = 0;
+let targetProtein = 0;
+let targetFatPct = 30;
+let ckdMode = false;
+let addedSupplements2 = []; // { id, product, qty }
+let tubeFeedMeals = 6;
+let tubeFeedInterval = 4;
+let targetConcentration = 1.0;
+let formula1Items = []; // { id, product, dailyKcal, meals }
+let formula2Items = [];
+let modalContext = ''; // 'tab2-supplement' | 'formula1' | 'formula2'
+let _modalExpandedIdx = null;
+
+/* ═══════════════════════════════════════════════
+   FOOD NUTRITION TABLE
+═══════════════════════════════════════════════ */
+const FOOD_NUTRITION = {
+  '乳品':    { kcal:150, protein:8,  carbs:12, fat:4 },
+  '全穀雜糧': { kcal:70,  protein:2,  carbs:15, fat:0 },
+  '低氮澱粉': { kcal:70,  protein:0,  carbs:17.5, fat:0 },
+  '蔬菜':    { kcal:25,  protein:1,  carbs:5,  fat:0 },
+  '水果':    { kcal:60,  protein:0,  carbs:15, fat:0 },
+  '中脂肉':  { kcal:75,  protein:7,  carbs:0,  fat:5 },
+  '低脂肉':  { kcal:55,  protein:7,  carbs:0,  fat:3 },
+  '油脂':    { kcal:45,  protein:0,  carbs:0,  fat:5 },
+};
+
+const DIST_ROWS_NORMAL = ['乳品','全穀雜糧','蔬菜','水果','中脂肉','低脂肉','油脂'];
+const DIST_ROWS_CKD    = ['全穀雜糧','低氮澱粉','蔬菜','水果','中脂肉','低脂肉','油脂'];
+
+// Each row: { disabled, b, eo, l, ao, d, eo2 }
+let distData = {};
+
+/* ═══════════════════════════════════════════════
+   PRODUCT DB
+═══════════════════════════════════════════════ */
+window.DB = [];
+
+function loadProductDB() {
+  fetch('/api/products', { cache: 'no-store' })
+    .then(r => r.json())
+    .then(data => { window.DB = data; buildModalBrandFilter(); })
+    .catch(() => {
+      try {
+        const saved = localStorage.getItem('productDB');
+        if (saved) { window.DB = JSON.parse(saved); buildModalBrandFilter(); }
+      } catch(e) {}
+      if (!window.DB || !window.DB.length) {
+        window.DB = getSampleDB();
+        buildModalBrandFilter();
+      }
+    });
+}
+
+function getSampleDB() {
+  return [
+    { id:'p1', nameCh:'安素', nameEn:'Ensure', brand:'亞培', typeGroup:'均衡低渣', form:'液體罐裝',
+      ml:237, calories:250, protein:9, carbs:34, fat:9, sodium:200, phosphorus:200, potassium:370, magnesium:45, fiber:0,
+      kcalPerMl: 250/237 },
+    { id:'p2', nameCh:'亞培穩固力', nameEn:'Ensure Plus', brand:'亞培', typeGroup:'均衡含纖', form:'液體罐裝',
+      ml:220, calories:350, protein:13, carbs:47, fat:11, sodium:230, phosphorus:230, potassium:440, magnesium:55, fiber:2.5,
+      kcalPerMl: 350/220 },
+    { id:'p3', nameCh:'益力素', nameEn:'Isocal', brand:'雀巢', typeGroup:'均衡低渣', form:'液體罐裝',
+      ml:200, calories:200, protein:8, carbs:27, fat:7, sodium:160, phosphorus:160, potassium:300, magnesium:40, fiber:0,
+      kcalPerMl: 200/200 },
+    { id:'p4', nameCh:'益富優蛋白', nameEn:'Protivit', brand:'益富', typeGroup:'高蛋白低渣', form:'粉劑包裝',
+      g:100, calories:380, protein:45, carbs:35, fat:7, sodium:300, phosphorus:350, potassium:600, magnesium:60, fiber:0,
+      teaspoon:5 },
+  ];
+}
+
+/* ═══════════════════════════════════════════════
+   TARGET STATE MANAGEMENT
+═══════════════════════════════════════════════ */
+function updateTargets(kcal, protein, fatPct, source) {
+  targetKcal    = kcal    !== undefined ? kcal    : targetKcal;
+  targetProtein = protein !== undefined ? protein : targetProtein;
+  targetFatPct  = fatPct  !== undefined ? fatPct  : targetFatPct;
+
+  // Sync both tabs' inputs
+  if (source !== 't2') {
+    setInputVal('t2-kcal-input',    targetKcal);
+    setInputVal('t2-protein-input', targetProtein);
+    setInputVal('t2-fat-pct-input', targetFatPct);
+  }
+  if (source !== 't3') {
+    setInputVal('t3-kcal-input',    targetKcal);
+    setInputVal('t3-protein-input', targetProtein);
+    setInputVal('t3-fat-pct-input', targetFatPct);
+  }
+
+  renderMacroPreview('t2');
+  renderMacroPreview('t3');
+  renderDistTotals();
+  renderFormulaTotals(1);
+  renderFormulaTotals(2);
+}
+
+function setInputVal(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.value = val || '';
+}
+
+function stepTarget(field, delta) {
+  if (field === 'kcal')    targetKcal    = Math.max(0, targetKcal + delta);
+  if (field === 'protein') targetProtein = Math.max(0, targetProtein + delta);
+  updateTargets(undefined, undefined, undefined, 't2');
+  setInputVal('t2-kcal-input', targetKcal);
+  setInputVal('t2-protein-input', targetProtein);
+}
+
+function stepTargetT3(field, delta) {
+  if (field === 'kcal')    targetKcal    = Math.max(0, targetKcal + delta);
+  if (field === 'protein') targetProtein = Math.max(0, targetProtein + delta);
+  updateTargets(undefined, undefined, undefined, 't3');
+  setInputVal('t3-kcal-input', targetKcal);
+  setInputVal('t3-protein-input', targetProtein);
+}
+
+function renderMacroPreview(prefix) {
+  const kcal = targetKcal, prot = targetProtein, fatPct = targetFatPct;
+  const protKcal = prot * 4;
+  const fatKcal  = kcal * fatPct / 100;
+  const fatG     = fatKcal / 9;
+  const carbKcal = Math.max(0, kcal - protKcal - fatKcal);
+  const carbG    = carbKcal / 4;
+  const protPct  = kcal > 0 ? (protKcal / kcal * 100).toFixed(0) : 0;
+  const carbPct  = kcal > 0 ? (carbKcal / kcal * 100).toFixed(0) : 0;
+
+  const carbPctEl = document.getElementById(`${prefix}-carb-pct`);
+  if (carbPctEl) carbPctEl.textContent = kcal > 0 ? carbPct : '—';
+
+  const prev = document.getElementById(`${prefix}-macro-preview`);
+  if (prev) {
+    if (kcal > 0) {
+      prev.textContent = `蛋白質 ${prot.toFixed(1)}g（${protPct}%）　醣類 ${carbG.toFixed(1)}g（${carbPct}%）　脂質 ${fatG.toFixed(1)}g（${fatPct}%）`;
+    } else {
+      prev.textContent = '—';
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   WIRE TAB 1 MATRIX → TARGET INPUTS
+═══════════════════════════════════════════════ */
+// Override onMatrixCellClick to also sync Tab2/Tab3
+const _origMatrixCellClick = window.onMatrixCellClick || null;
+
+function syncMatrixToTargets() {
+  const eKcal = state.selectedEnergyKcal ? parseFloat(state.selectedEnergyKcal.value) : 0;
+  const pG    = state.selectedProteinG   ? parseFloat(state.selectedProteinG.value)   : 0;
+  if (eKcal > 0 || pG > 0) {
+    updateTargets(eKcal || targetKcal, pG || targetProtein, undefined, 'matrix');
+  }
+}
+
+// Patch matrix cell click after init
+document.addEventListener('DOMContentLoaded', () => {
+  // Re-wire matrix cells to also sync targets
+  setTimeout(() => {
+    document.querySelectorAll('#matrix-tbody td').forEach(td => {
+      td.addEventListener('click', () => {
+        setTimeout(syncMatrixToTargets, 0);
+      });
+    });
+  }, 100);
+});
+
+/* ═══════════════════════════════════════════════
+   INIT TAB 2
+═══════════════════════════════════════════════ */
+function initTab2() {
+  document.getElementById('t2-kcal-input').addEventListener('input', function() {
+    const v = parseFloat(this.value) || 0;
+    targetKcal = v;
+    updateTargets(v, undefined, undefined, 't2');
+  });
+  document.getElementById('t2-protein-input').addEventListener('input', function() {
+    const v = parseFloat(this.value) || 0;
+    targetProtein = v;
+    updateTargets(undefined, v, undefined, 't2');
+  });
+  document.getElementById('t2-fat-pct-input').addEventListener('input', function() {
+    const v = parseFloat(this.value) || 30;
+    targetFatPct = v;
+    updateTargets(undefined, undefined, v, 't2');
+  });
+  buildDistTable();
+}
+
+/* ═══════════════════════════════════════════════
+   INIT TAB 3
+═══════════════════════════════════════════════ */
+function initTab3() {
+  document.getElementById('t3-kcal-input').addEventListener('input', function() {
+    const v = parseFloat(this.value) || 0;
+    targetKcal = v;
+    updateTargets(v, undefined, undefined, 't3');
+  });
+  document.getElementById('t3-protein-input').addEventListener('input', function() {
+    const v = parseFloat(this.value) || 0;
+    targetProtein = v;
+    updateTargets(undefined, v, undefined, 't3');
+  });
+  document.getElementById('t3-fat-pct-input').addEventListener('input', function() {
+    const v = parseFloat(this.value) || 30;
+    targetFatPct = v;
+    updateTargets(undefined, undefined, v, 't3');
+  });
+  onTubeFeedParamChange();
+}
+
+function onTubeFeedParamChange() {
+  tubeFeedMeals       = parseInt(document.getElementById('t3-meals').value) || 6;
+  tubeFeedInterval    = parseInt(document.getElementById('t3-interval').value) || 4;
+  targetConcentration = parseFloat(document.getElementById('t3-concentration').value) || 1.0;
+  renderFormulaTotals(1);
+  renderFormulaTotals(2);
+}
+
+/* ═══════════════════════════════════════════════
+   CKD MODE
+═══════════════════════════════════════════════ */
+function onCKDToggle() {
+  ckdMode = document.getElementById('ckd-toggle').checked;
+  buildDistTable();
+}
+
+/* ═══════════════════════════════════════════════
+   DISTRIBUTION TABLE
+═══════════════════════════════════════════════ */
+function buildDistTable() {
+  const rows = ckdMode ? DIST_ROWS_CKD : DIST_ROWS_NORMAL;
+  const tbody = document.getElementById('dist-tbody');
+  if (!tbody) return;
+
+  // Preserve existing data
+  const oldData = Object.assign({}, distData);
+  distData = {};
+  rows.forEach(name => {
+    distData[name] = oldData[name] || { disabled: false, b:0, eo:0, l:0, ao:0, d:0, eo2:0 };
+  });
+
+  tbody.innerHTML = '';
+  rows.forEach(name => renderDistRow(name, tbody));
+  renderDistTotals();
+}
+
+function renderDistRow(name, tbody) {
+  const d = distData[name];
+  const tr = document.createElement('tr');
+  tr.id = `dist-row-${name}`;
+  if (d.disabled) tr.className = 'row-disabled';
+
+  // × button
+  const tdX = document.createElement('td');
+  tdX.style.padding = '2px';
+  const btnX = document.createElement('button');
+  btnX.className = 'dist-row-x';
+  btnX.textContent = '×';
+  btnX.title = d.disabled ? '啟用此列' : '停用此列';
+  btnX.addEventListener('click', () => {
+    d.disabled = !d.disabled;
+    if (d.disabled) { d.b=0;d.eo=0;d.l=0;d.ao=0;d.d=0;d.eo2=0; }
+    tr.className = d.disabled ? 'row-disabled' : '';
+    btnX.title = d.disabled ? '啟用此列' : '停用此列';
+    renderDistTotals();
+  });
+  tdX.appendChild(btnX);
+  tr.appendChild(tdX);
+
+  // Row name
+  const tdName = document.createElement('td');
+  tdName.className = 'dist-row-name';
+  tdName.textContent = name;
+  tr.appendChild(tdName);
+
+  // Meal inputs: b, eo, l, ao, d, eo2
+  const keys = ['b','eo','l','ao','d','eo2'];
+  keys.forEach(key => {
+    const td = document.createElement('td');
+    const inp = document.createElement('input');
+    inp.type = 'number';
+    inp.step = '0.5';
+    inp.min = '0';
+    inp.className = 'dist-input';
+    inp.value = d[key] || 0;
+    inp.addEventListener('input', () => {
+      d[key] = parseFloat(inp.value) || 0;
+      updateRowTotal(name);
+      renderDistTotals();
+    });
+    td.appendChild(inp);
+    tr.appendChild(td);
+  });
+
+  // Total column
+  const tdTotal = document.createElement('td');
+  tdTotal.className = 'col-total';
+  tdTotal.id = `dist-total-${name}`;
+  const sum = keys.reduce((a,k) => a + (d[k]||0), 0);
+  tdTotal.textContent = sum;
+  tr.appendChild(tdTotal);
+
+  tbody.appendChild(tr);
+}
+
+function updateRowTotal(name) {
+  const d = distData[name];
+  if (!d) return;
+  const keys = ['b','eo','l','ao','d','eo2'];
+  const sum = keys.reduce((a,k) => a+(d[k]||0), 0);
+  const el = document.getElementById(`dist-total-${name}`);
+  if (el) el.textContent = sum;
+}
+
+function renderDistTotals() {
+  const rows = ckdMode ? DIST_ROWS_CKD : DIST_ROWS_NORMAL;
+  let totalKcal=0, totalProt=0, totalCarbs=0, totalFat=0;
+  rows.forEach(name => {
+    const d = distData[name];
+    if (!d || d.disabled) return;
+    const keys = ['b','eo','l','ao','d','eo2'];
+    const sum = keys.reduce((a,k)=>a+(d[k]||0),0);
+    const n = FOOD_NUTRITION[name];
+    if (!n) return;
+    totalKcal  += sum * n.kcal;
+    totalProt  += sum * n.protein;
+    totalCarbs += sum * n.carbs;
+    totalFat   += sum * n.fat;
+  });
+
+  const setEl = (id, text) => { const el=document.getElementById(id); if(el) el.textContent=text; };
+  const setHtml = (id, html) => { const el=document.getElementById(id); if(el) el.innerHTML=html; };
+
+  setEl('t2-total-kcal', `${Math.round(totalKcal)} kcal`);
+  setEl('t2-total-protein', `${totalProt.toFixed(1)} g`);
+  setEl('t2-total-carbs', `${totalCarbs.toFixed(1)} g`);
+  setEl('t2-total-fat', `${totalFat.toFixed(1)} g`);
+
+  const pPct = totalKcal>0 ? (totalProt*4/totalKcal*100).toFixed(0)+'%' : '';
+  const cPct = totalKcal>0 ? (totalCarbs*4/totalKcal*100).toFixed(0)+'%' : '';
+  const fPct = totalKcal>0 ? (totalFat*9/totalKcal*100).toFixed(0)+'%' : '';
+  setEl('t2-total-protein-pct', pPct);
+  setEl('t2-total-carbs-pct', cPct);
+  setEl('t2-total-fat-pct', fPct);
+
+  const diffEl = document.getElementById('t2-diff-kcal');
+  if (diffEl) {
+    const diff = Math.round(totalKcal) - targetKcal;
+    if (targetKcal > 0 && diff !== 0) {
+      const cls = diff > 0 ? 'totals-card-diff-pos' : 'totals-card-diff-neg';
+      const sign = diff > 0 ? '+' : '';
+      diffEl.innerHTML = `<span class="${cls}">${sign}${diff} kcal</span>`;
+    } else {
+      diffEl.innerHTML = '';
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   DISTRIBUTION ALGORITHM
+═══════════════════════════════════════════════ */
+function calcDistribution() {
+  let remKcal    = targetKcal;
+  let remProtein = targetProtein;
+  let remFat     = (targetKcal * targetFatPct / 100) / 9;
+  let remCarb    = (targetKcal - targetProtein*4 - targetKcal*targetFatPct/100) / 4;
+
+  addedSupplements2.forEach(s => {
+    const p = s.product, qty = s.qty;
+    remKcal    -= (p.calories || 0) * qty;
+    remProtein -= (p.protein  || 0) * qty;
+    remFat     -= (p.fat      || 0) * qty;
+    remCarb    -= (p.carbs    || 0) * qty;
+  });
+
+  if (remKcal <= 0 || remProtein <= 0 || remCarb <= 0) return null;
+
+  const dairy = ckdMode ? 0 : 1;
+  const veg   = remKcal < 2000 ? 3 : remKcal < 2500 ? 4 : 5;
+  const fruit = remKcal < 2000 ? 2 : remKcal < 2500 ? 3 : 4;
+  const totalCarbServings = Math.round((remCarb - (dairy*12 + veg*5 + fruit*15)) / 15);
+  let grain = Math.max(0, totalCarbServings);
+  let lowN = 0;
+  if (ckdMode) { lowN = Math.round(grain/3); grain = grain - lowN; }
+
+  let totalMeat = Math.round((remProtein - (dairy*8 + grain*2 + veg*1)) / 7);
+  totalMeat = Math.max(0, totalMeat);
+  let midFat = totalMeat, lowFat = 0;
+  let fat = Math.floor((remFat - (dairy*4 + midFat*5)) / 5);
+  if (fat < 3) {
+    lowFat = totalMeat; midFat = 0;
+    fat = Math.floor((remFat - (dairy*4 + lowFat*3)) / 5);
+  }
+  fat = Math.max(0, fat);
+
+  function distribute3(total) {
+    total = Math.max(0, total);
+    const base = Math.floor(total/3);
+    const rem  = total % 3;
+    return { b: base, l: base+(rem>=2?1:0), d: base+(rem>=1?1:0) };
+  }
+
+  const results = {};
+  if (!ckdMode) results['乳品'] = { b:dairy, eo:0, l:0, ao:0, d:0, eo2:0, disabled:false };
+  const gD = distribute3(grain);
+  results['全穀雜糧'] = { b:gD.b, eo:0, l:gD.l, ao:0, d:gD.d, eo2:0, disabled:false };
+  if (ckdMode) results['低氮澱粉'] = { b:0, eo:0, l:lowN, ao:0, d:0, eo2:0, disabled:false };
+  const vD = distribute3(veg);
+  results['蔬菜'] = { b:vD.b, eo:0, l:vD.l, ao:0, d:vD.d, eo2:0, disabled:false };
+  const fD = distribute3(fruit);
+  results['水果'] = { b:fD.b, eo:0, l:fD.l, ao:0, d:fD.d, eo2:0, disabled:false };
+  const mD = distribute3(midFat);
+  results['中脂肉'] = { b:mD.b, eo:0, l:mD.l, ao:0, d:mD.d, eo2:0, disabled:false };
+  const lmBase = lowFat > 0 ? Math.floor(lowFat/3) : 0;
+  results['低脂肉'] = { b:lmBase, eo:0, l:lmBase, ao:0, d:lowFat>0?lowFat-2*lmBase:0, eo2:0, disabled:false };
+  const oD = distribute3(fat);
+  results['油脂'] = { b:oD.b, eo:0, l:oD.l, ao:0, d:oD.d, eo2:0, disabled:false };
+  return results;
+}
+
+function runDistribution() {
+  const warnEl = document.getElementById('t2-dist-warn');
+  if (!targetKcal || !targetProtein) {
+    warnEl.textContent = '⚠ 請先在目標定案區填入目標熱量與蛋白質';
+    warnEl.classList.remove('hidden');
+    return;
+  }
+  const results = calcDistribution();
+  if (!results) {
+    warnEl.textContent = '⚠ 補充品已超過目標需求，無法計算分配，請調整補充品份量或目標值';
+    warnEl.classList.remove('hidden');
+    return;
+  }
+  warnEl.classList.add('hidden');
+
+  // Apply results to distData
+  const rows = ckdMode ? DIST_ROWS_CKD : DIST_ROWS_NORMAL;
+  rows.forEach(name => {
+    if (results[name]) {
+      distData[name] = results[name];
+    } else {
+      distData[name] = { b:0, eo:0, l:0, ao:0, d:0, eo2:0, disabled:false };
+    }
+  });
+
+  // Re-render table
+  const tbody = document.getElementById('dist-tbody');
+  tbody.innerHTML = '';
+  rows.forEach(name => renderDistRow(name, tbody));
+  renderDistTotals();
+}
+
+/* ═══════════════════════════════════════════════
+   TAB 2 SUPPLEMENTS
+═══════════════════════════════════════════════ */
+function renderSupplements() {
+  const container = document.getElementById('t2-supplements-list');
+  if (!container) return;
+  container.innerHTML = '';
+  addedSupplements2.forEach((s, idx) => {
+    const p = s.product;
+    const totalKcal = ((p.calories||0) * s.qty).toFixed(0);
+    const totalProt = ((p.protein||0) * s.qty).toFixed(1);
+    const div = document.createElement('div');
+    div.className = 'supplement-card';
+    div.innerHTML = `
+      <div class="supplement-name">${p.nameCh}</div>
+      <div class="supplement-info">${p.nameEn||''} · ${p.brand||''} · ${p.form||''}</div>
+      <div class="supplement-qty-row">
+        <span>份數</span>
+        <input type="number" step="0.5" min="0.5" value="${s.qty}" style="width:54px;padding:4px 6px;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;font-size:12px;" onchange="updateSuppQty(${idx},this.value)">
+        <span class="supplement-total">熱量 ${totalKcal}kcal · 蛋白質 ${totalProt}g</span>
+        <button class="btn btn-danger-outline" style="padding:4px 10px;font-size:12px;margin-left:auto;" onclick="removeSupp(${idx})">移除</button>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+
+  const warnEl = document.getElementById('t2-supp-warn');
+  if (warnEl) {
+    const totalSuppKcal = addedSupplements2.reduce((a,s)=>a+(s.product.calories||0)*s.qty,0);
+    if (targetKcal > 0 && totalSuppKcal >= targetKcal) {
+      warnEl.classList.remove('hidden');
+    } else {
+      warnEl.classList.add('hidden');
+    }
+  }
+}
+
+function updateSuppQty(idx, val) {
+  if (addedSupplements2[idx]) {
+    addedSupplements2[idx].qty = parseFloat(val) || 1;
+    renderSupplements();
+  }
+}
+
+function removeSupp(idx) {
+  addedSupplements2.splice(idx, 1);
+  renderSupplements();
+}
+
+/* ═══════════════════════════════════════════════
+   FORMULA ITEMS RENDERING (Tab 3)
+═══════════════════════════════════════════════ */
+function renderFormulaItems(formulaNum) {
+  const items = formulaNum === 1 ? formula1Items : formula2Items;
+  const container = document.getElementById(`formula${formulaNum}-items`);
+  if (!container) return;
+  container.innerHTML = '';
+
+  items.forEach((item, idx) => {
+    const p = item.product;
+    const isPowder = p.form === '粉劑包裝';
+    const div = document.createElement('div');
+    div.className = 'formula-item';
+
+    let servingInfo = '';
+    if (isPowder && p.g && p.teaspoon) {
+      servingInfo = `每份: 1匙=${p.teaspoon}g=${(p.calories/(p.g/p.teaspoon)).toFixed(0)}kcal（粉劑）`;
+    } else if (!isPowder && p.ml && p.kcalPerMl) {
+      servingInfo = `每罐: ${p.ml}ml=${p.calories}kcal（液體）`;
+    }
+
+    let calcResult = '';
+    if (item.dailyKcal > 0) {
+      if (isPowder && p.g && p.teaspoon) {
+        const kcalPerG = p.calories / p.g;
+        const dailyG = item.dailyKcal / kcalPerG;
+        const dailySpoons = dailyG / p.teaspoon;
+        const meals = item.meals || tubeFeedMeals;
+        const perMealG = dailyG / meals;
+        const perMealSpoons = Math.ceil(perMealG / p.teaspoon * 2) / 2;
+        calcResult = `整日共${dailyG.toFixed(1)}g（${dailySpoons.toFixed(1)}匙）→ 每餐${perMealG.toFixed(1)}g（${perMealSpoons}匙）`;
+      } else if (!isPowder && p.ml && p.kcalPerMl) {
+        const dailyMl = item.dailyKcal / p.kcalPerMl;
+        const dailyCans = dailyMl / p.ml;
+        const meals = item.meals || tubeFeedMeals;
+        const perMealCans = Math.ceil(dailyCans / meals);
+        calcResult = `整日共${dailyCans.toFixed(1)}罐（${dailyMl.toFixed(0)}ml）→ 每餐${perMealCans}罐（${(perMealCans*p.ml).toFixed(0)}ml）`;
+      }
+    }
+
+    div.innerHTML = `
+      <div class="formula-item-header">
+        <div>
+          <div class="formula-item-name">${p.nameCh}</div>
+          <div class="formula-item-name-en">${p.nameEn||''}</div>
+          <div class="formula-item-serving">${p.brand||''} · ${p.typeGroup||''} · ${servingInfo}</div>
+        </div>
+        <button class="btn btn-danger-outline" style="padding:4px 10px;font-size:12px;flex-shrink:0;" onclick="removeFormulaItem(${formulaNum},${idx})">移除</button>
+      </div>
+      <div class="formula-item-row">
+        <label style="font-weight:600;">整日熱量</label>
+        <input type="number" min="0" step="50" value="${item.dailyKcal||0}" style="width:72px;padding:4px 6px;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;font-size:12px;" oninput="updateFormulaItemKcal(${formulaNum},${idx},this.value)">
+        <span>kcal</span>
+        <label style="font-weight:600;margin-left:8px;">餐次</label>
+        <input type="number" min="1" value="${item.meals||tubeFeedMeals}" style="width:50px;padding:4px 6px;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;font-size:12px;" oninput="updateFormulaItemMeals(${formulaNum},${idx},this.value)">
+      </div>
+      ${calcResult ? `<div class="formula-item-result">${calcResult}</div>` : ''}
+    `;
+    container.appendChild(div);
+  });
+
+  renderFormulaTotals(formulaNum);
+}
+
+function updateFormulaItemKcal(formulaNum, idx, val) {
+  const items = formulaNum === 1 ? formula1Items : formula2Items;
+  if (items[idx]) {
+    items[idx].dailyKcal = parseFloat(val) || 0;
+    renderFormulaItems(formulaNum);
+  }
+}
+
+function updateFormulaItemMeals(formulaNum, idx, val) {
+  const items = formulaNum === 1 ? formula1Items : formula2Items;
+  if (items[idx]) {
+    items[idx].meals = parseInt(val) || tubeFeedMeals;
+    renderFormulaItems(formulaNum);
+  }
+}
+
+function removeFormulaItem(formulaNum, idx) {
+  const items = formulaNum === 1 ? formula1Items : formula2Items;
+  items.splice(idx, 1);
+  renderFormulaItems(formulaNum);
+}
+
+function renderFormulaTotals(formulaNum) {
+  const items = formulaNum === 1 ? formula1Items : formula2Items;
+  const container = document.getElementById(`formula${formulaNum}-totals`);
+  if (!container) return;
+  if (!items.length) { container.innerHTML = ''; return; }
+
+  let totalKcal=0, totalProt=0, totalCarbs=0, totalFat=0;
+  let totalNa=0, totalPhos=0, totalK=0, totalMg=0, totalFiber=0;
+  let totalMl=0;
+
+  items.forEach(item => {
+    if (!item.dailyKcal) return;
+    const p = item.product;
+    const isPowder = p.form === '粉劑包裝';
+    const kcalPerServing = p.calories || 1;
+    const servings = item.dailyKcal / kcalPerServing;
+    totalKcal  += item.dailyKcal;
+    totalProt  += (p.protein||0) * servings;
+    totalCarbs += (p.carbs||0) * servings;
+    totalFat   += (p.fat||0) * servings;
+    totalNa    += (p.sodium||0) * servings;
+    totalPhos  += (p.phosphorus||0) * servings;
+    totalK     += (p.potassium||0) * servings;
+    totalMg    += (p.magnesium||0) * servings;
+    totalFiber += (p.fiber||0) * servings;
+    if (!isPowder && p.ml && p.kcalPerMl) {
+      totalMl += item.dailyKcal / p.kcalPerMl;
+    }
+  });
+
+  const pPct  = totalKcal>0 ? (totalProt*4/totalKcal*100).toFixed(0) : 0;
+  const cPct  = totalKcal>0 ? (totalCarbs*4/totalKcal*100).toFixed(0) : 0;
+  const fPct  = totalKcal>0 ? (totalFat*9/totalKcal*100).toFixed(0) : 0;
+  const naNeeded = 2000 - totalNa;
+  const saltExtra = naNeeded > 0 ? (Math.round(naNeeded / 400 * 10) / 10) : 0;
+  const saltHTML = naNeeded > 0
+    ? `<div class="formula-salt-warn">★ 每天需額外添加精鹽 ${saltExtra} 克</div>`
+    : `<div class="formula-salt-ok">✓ 已達每日鈉需求</div>`;
+
+  const concHTML = totalMl > 0
+    ? `<div class="formula-concentration">實際濃度：${(totalKcal/totalMl).toFixed(2)} kcal/ml</div>`
+    : '';
+
+  container.innerHTML = `
+    <div class="formula-totals-main">熱量 ${Math.round(totalKcal)}kcal &nbsp; 蛋白質 ${totalProt.toFixed(1)}g（${pPct}%）&nbsp; 醣類 ${totalCarbs.toFixed(1)}g（${cPct}%）&nbsp; 脂質 ${totalFat.toFixed(1)}g（${fPct}%）</div>
+    <div class="formula-totals-sub">鈉 ${Math.round(totalNa)}mg &middot; 磷 ${Math.round(totalPhos)}mg &middot; 鉀 ${Math.round(totalK)}mg &middot; 鎂 ${Math.round(totalMg)}mg &middot; 膳食纖維 ${totalFiber.toFixed(1)}g</div>
+    ${saltHTML}
+    ${concHTML}
+  `;
+
+  buildPrintContent();
+}
+
+/* ═══════════════════════════════════════════════
+   PRINT CONTENT BUILDER
+═══════════════════════════════════════════════ */
+function buildPrintContent() {
+  [1,2].forEach(fn => {
+    const container = document.getElementById(`print-formula${fn}`);
+    if (!container) return;
+    const items = fn === 1 ? formula1Items : formula2Items;
+    if (!items.length) { container.innerHTML = ''; return; }
+
+    let rows = '';
+    items.forEach(item => {
+      if (!item.dailyKcal) return;
+      const p = item.product;
+      const isPowder = p.form === '粉劑包裝';
+      let qty = '', note = '';
+      if (isPowder && p.g && p.teaspoon) {
+        const kcalPerG = p.calories / p.g;
+        const dailyG = item.dailyKcal / kcalPerG;
+        const perMealG = dailyG / (item.meals || tubeFeedMeals);
+        const perMealSpoons = Math.ceil(perMealG / p.teaspoon * 2) / 2;
+        qty = `${perMealSpoons} 匙`;
+        note = `內附匙___匙`;
+      } else if (!isPowder && p.ml && p.kcalPerMl) {
+        const dailyMl = item.dailyKcal / p.kcalPerMl;
+        const dailyCans = dailyMl / p.ml;
+        const perMealCans = Math.ceil(dailyCans / (item.meals || tubeFeedMeals));
+        qty = `${perMealCans} 罐`;
+        note = `每罐 ${p.ml}ml`;
+      }
+      rows += `<tr><td style="padding:4px 8px;border:1px solid #ccc;">${p.nameCh}</td><td style="padding:4px 8px;border:1px solid #ccc;">${qty}</td><td style="padding:4px 8px;border:1px solid #ccc;">${note}</td></tr>`;
+    });
+
+    // Salt
+    let totalNa = 0;
+    items.forEach(item => {
+      if (!item.dailyKcal) return;
+      const p = item.product;
+      const servings = item.dailyKcal / (p.calories||1);
+      totalNa += (p.sodium||0) * servings;
+    });
+    const saltLine = totalNa < 2000
+      ? `<div style="margin-top:6px;color:#D97706;font-weight:600;">★ 額外加鹽 ${Math.round((2000-totalNa)/400*10)/10} 克</div>`
+      : '';
+
+    container.innerHTML = `
+      <div style="font-weight:700;font-size:14px;margin:12px 0 6px;">灌食配方${fn === 1 ? '一' : '二'}</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead><tr>
+          <th style="padding:4px 8px;border:1px solid #ccc;background:#f5f5f5;">食物名稱</th>
+          <th style="padding:4px 8px;border:1px solid #ccc;background:#f5f5f5;">份量</th>
+          <th style="padding:4px 8px;border:1px solid #ccc;background:#f5f5f5;">備註</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <div style="margin-top:6px;font-size:12px;">40℃開水泡到_____c.c.</div>
+      ${saltLine}
+    `;
+  });
+}
+
+/* ═══════════════════════════════════════════════
+   PRODUCT MODAL
+═══════════════════════════════════════════════ */
+function openProductModal(context) {
+  modalContext = context;
+  _modalExpandedIdx = null;
+  document.getElementById('modal-keyword').value = '';
+  document.getElementById('modal-brand').value = '';
+  document.getElementById('modal-form').value = '';
+  document.getElementById('modal-type').value = '';
+  document.getElementById('product-modal').classList.remove('hidden');
+  renderModalResults();
+}
+
+function closeProductModal() {
+  document.getElementById('product-modal').classList.add('hidden');
+}
+
+function onModalOverlayClick(e) {
+  if (e.target === document.getElementById('product-modal')) {
+    closeProductModal();
+  }
+}
+
+function buildModalBrandFilter() {
+  const select = document.getElementById('modal-brand');
+  if (!select) return;
+  const brands = [...new Set((window.DB||[]).map(p=>p.brand).filter(Boolean))].sort();
+  const existing = select.innerHTML;
+  select.innerHTML = '<option value="">所有廠牌</option>';
+  brands.forEach(b => {
+    const opt = document.createElement('option');
+    opt.value = b; opt.textContent = b;
+    select.appendChild(opt);
+  });
+}
+
+function renderModalResults() {
+  const keyword = (document.getElementById('modal-keyword').value||'').toLowerCase();
+  const brand   = document.getElementById('modal-brand').value;
+  const form    = document.getElementById('modal-form').value;
+  const type    = document.getElementById('modal-type').value;
+
+  const db = window.DB || [];
+  const filtered = db.filter(p => {
+    if (keyword && !((p.nameCh||'').toLowerCase().includes(keyword) || (p.nameEn||'').toLowerCase().includes(keyword))) return false;
+    if (brand && p.brand !== brand) return false;
+    if (form  && p.form  !== form)  return false;
+    if (type  && p.typeGroup !== type) return false;
+    return true;
+  });
+
+  const container = document.getElementById('modal-results');
+  if (!filtered.length) {
+    container.innerHTML = '<div class="modal-empty">沒有符合的產品</div>';
+    return;
+  }
+
+  container.innerHTML = '';
+  filtered.forEach((p, idx) => {
+    const row = document.createElement('div');
+    row.className = 'modal-product-row';
+
+    const servingInfo = p.form === '粉劑包裝'
+      ? `每份 ${p.teaspoon||'?'}g（${p.calories}kcal）`
+      : `每罐 ${p.ml||'?'}ml（${p.calories}kcal）`;
+
+    row.innerHTML = `
+      <div class="modal-product-left">
+        <div class="modal-product-nameCh">${p.nameCh||''}</div>
+        <div class="modal-product-nameEn">${p.nameEn||''}</div>
+        <div class="modal-product-meta">${p.brand||''} · ${p.typeGroup||''} · ${p.form||''} · ${servingInfo}</div>
+      </div>
+      <div class="modal-product-kcal">${p.calories} kcal/份</div>
+      <button class="btn btn-primary" style="padding:7px 14px;font-size:12px;flex-shrink:0;" onclick="addProductFromModal('${p.id}')">加入</button>
+    `;
+
+    // Expand detail on row click
+    const detail = document.createElement('div');
+    detail.className = 'modal-product-detail';
+    detail.id = `modal-detail-${idx}`;
+    const fields = [
+      ['蛋白質', p.protein, 'g'], ['醣類', p.carbs, 'g'], ['脂質', p.fat, 'g'],
+      ['鈉', p.sodium, 'mg'], ['磷', p.phosphorus, 'mg'], ['鉀', p.potassium, 'mg'],
+      ['鎂', p.magnesium, 'mg'], ['膳食纖維', p.fiber, 'g'],
+    ];
+    fields.filter(f => f[1] != null).forEach(f => {
+      const s = document.createElement('span');
+      s.textContent = `${f[0]}: ${f[1]}${f[2]}`;
+      detail.appendChild(s);
+    });
+
+    row.addEventListener('click', (e) => {
+      if (e.target.tagName === 'BUTTON') return;
+      const isOpen = detail.classList.contains('open');
+      document.querySelectorAll('.modal-product-detail').forEach(d => d.classList.remove('open'));
+      if (!isOpen) detail.classList.add('open');
+    });
+
+    container.appendChild(row);
+    container.appendChild(detail);
+  });
+}
+
+function addProductFromModal(productId) {
+  const p = (window.DB||[]).find(x => x.id === productId);
+  if (!p) return;
+
+  if (modalContext === 'tab2-supplement') {
+    addedSupplements2.push({ id: Date.now(), product: p, qty: 1 });
+    renderSupplements();
+  } else if (modalContext === 'formula1') {
+    formula1Items.push({ id: Date.now(), product: p, dailyKcal: p.calories||0, meals: tubeFeedMeals });
+    renderFormulaItems(1);
+  } else if (modalContext === 'formula2') {
+    formula2Items.push({ id: Date.now(), product: p, dailyKcal: p.calories||0, meals: tubeFeedMeals });
+    renderFormulaItems(2);
+  }
+
+  closeProductModal();
+}
 </script>
 </body>
 </html>
